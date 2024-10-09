@@ -1,32 +1,29 @@
 +++
-title = "Deploy Application"
+title = "Deploying the Application"
 date = 2024
 weight = 1
 chapter = false
 pre = "<b>7.1. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+#### Deployment with Docker Compose
 
-#### Activate virtual MFA devices via Console
+We have already cloned the project from the previous sections. Navigate to **aws-fcj-container-app/docker-compose-env**.
 
-To set up and activate virtual MFA devices:
+![Image](/images/7-docker-compose/1-deploy/7.1.png?featherlight=false&width=90pc)
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+In this directory, we will edit the **backend.app.env** file to modify the environment for the backend.
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+![Image](/images/7-docker-compose/1-deploy/7.2.png?featherlight=false&width=90pc)
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+Proceed to change the **DB_HOST** variable to match the **RDS** we created in the previous section. Then save the file.
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![Image](/images/7-docker-compose/1-deploy/7.3.png?featherlight=false&width=90pc)
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+In the **aws-fcj-container-app** directory, we will build the images for backend, frontend, and nginx.
+
+![Image](/images/7-docker-compose/1-deploy/7.4.png?featherlight=false&width=90pc)
+
+Successfully build the images.
+
+![Image](/images/7-docker-compose/1-deploy/7.5.png?featherlight=false&width=90pc)
