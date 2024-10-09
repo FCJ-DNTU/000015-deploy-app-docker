@@ -6,27 +6,30 @@ chapter = false
 pre = "<b>6.2. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Kết quả triển khai
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Quay lại trong EC2 Console, chúng ta cần sẽ sao chép lại Public IPv4 của EC2 mà nãy giờ chúng ta đã thao tác, sau đó là thêm vào trình duyệt URL như sau
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+```
+http://public-dns-of-your-ec2:3000
+```
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+{{% notice note%}}
+NginX hoạt động ở Port 3000, khi mà chúng ta request tới URL trên, thì NginX sẽ xử lý và chuyển tiếp yêu cầu của chúng ta tới FrontEnd Application. Khi đó thì nội dung của Web site sẽ được tải về.
+{{% /notice%}}
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+**INSERT IMAGE HERE**
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+Thử đăng nhập với User, nếu như đăng nhập thành công thì có nghĩa là ứng dụng của chúng ta đã hoạt động bình thường và chuyển chúng ta về giao diện chính.
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+**INSERT IMAGE HERE**
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+**INSERT IMAGE HERE**
+
+Mở thêm một số trang khác
+
+**INSERT IMAGE HERE**
+
+**INSERT IMAGE HERE**
+
+Như vậy thì chúng ta đã triển khai ứng dụng thành công với Docker Image. Sang phần sau thì chúng ta sẽ dùng một giải pháp khác để triển khai ứng dụng với Docker Compose.

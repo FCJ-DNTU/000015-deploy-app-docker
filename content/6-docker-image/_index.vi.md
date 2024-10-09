@@ -6,7 +6,9 @@ chapter = false
 pre = "<b>6. </b>"
 +++
 
-#### Creating an Admininistrator Group
+#### Content
+
+Ở phần trước thì chúng ta đã thêm các thư viện, gói chạy thành công. Giờ thì chúng ta sẽ sử dụng các dependencies đó để thực hiện các thao tác ở trong phần này.
 
 1. [Triển khai Application](1-deploy)
 2. [Kiểm tra Application](2-test-app)
