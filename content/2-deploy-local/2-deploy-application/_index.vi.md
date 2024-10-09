@@ -6,73 +6,136 @@ chapter = false
 pre = "<b>2.2. </b>"
 +++
 
-**Nội dung**
+{{% notice note%}}
+Để làm được phần này thì buộc bạn phải cài đặt được Git trước đó.
+{{% /notice%}}
 
-- [Kích hoạt thiết bị MFA phần cứng khác thông qua Console](#kích-hoạt-thiết-bị-mfa-phần-cứng-khác-thông-qua-console)
+#### Tải mã nguồn
 
-#### Kích hoạt thiết bị MFA phần cứng khác thông qua Console
+Tạo một folder với tên bất kỳ (mình đặt là `workspace`), click chuột phải chọn **Open in Terminal**.
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials** sau đó mở rộng Multi-factor authentication (MFA).
+**INSERT IMAGE HERE**
 
-![Image](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+Clone mã nguồn của ứng dụng từ trên Github về trên máy.
 
-3. Để quản lí khóa bảo mật U2F, bạn phải có quyền từ bộ quyền sau. ở thanh bên trái, chọn **Policies** sau đó chọn **Create policy**, chọn **JSON** tab và dán phần bên dưới vào:
+**INSERT IMAGE HERE**
 
-```js
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AllowManageOwnUserMFA",
-            "Effect": "Allow",
-            "Action": [
-                "iam:DeactivateMFADevice",
-                "iam:EnableMFADevice",
-                "iam:GetUser",
-                "iam:ListMFADevices",
-                "iam:ResyncMFADevice"
-            ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}"
-        },
-        {
-            "Sid": "DenyAllExceptListedIfNoMFA",
-            "Effect": "Deny",
-            "NotAction": [
-                "iam:EnableMFADevice",
-                "iam:GetUser",
-                "iam:ListMFADevices",
-                "iam:ResyncMFADevice"
-            ],
-            "Resource": "arn:aws:iam::*:user/${aws:username}",
-            "Condition": {
-                "BoolIfExists": {
-                    "aws:MultiFactorAuthPresent": "false"
-                }
-            }
-        }
-    ]
-}
+```bash
+git clone https://github.com/FCJ-DNTU/fcj-resbar.git
 ```
 
-4. Chọn **Next: Tags**. Đây là màn hình về **Tags** một công cụ dùng để phân biệt các tài nguyên của AWS.
-5. Chọn  **Next: Review**. Đây là màn hình cho phép bạn review về bộ quyền mà bạn đang tạo ra. 
-5. Nhập tên bộ quyền (ví dụ: MFAHardDevice) và chọn **Create policy**.
+**INSERT IMAGE HERE**
 
-![MFA Policy](/images/1-account-setup/MFAPolicy.png?width=90pc)
+#### Thêm dữ liệu
 
-6. Ở thanh bên trái , chọn **Dashboard** và sau đó chọn **Enable MFA**.
+Để thêm được dữ liệu:
 
-![Dashboard](/images/1-account-setup/Dashboard.png?width=90pc)
+- Vào trong thư mục `database` của thư mục chứa mã nguồn với tải về.
+- Sao chép đường dẫn ở trên thanh Browse của window.
+- Dán đường dẫn vào trong MySQL Shell, thêm tên của script (`init.sql`) vào trong chuỗi mới dán vào.
 
-7. Mở rộng Multi-factor authentication (MFA) sau đó chọn **Active MFA**.
+**INSERT IMAGE HERE**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+Vào MySQL Shell để kết nối tới MySQL Server, các bước kết nối tương tự như ở phần trước. Trong thư mục của dự án, bạn sẽ để ý thấy có một thư mục tên là `database`, trong này chứa script SQL để tạo cơ sở dữ liệu, bảng, các ràng buộc và thêm dữ liệu. Trong bước này thì chúng ta sẽ dùng lệnh `source` để chạy script.
 
-8. Trong **Manage MFA Device**, chọn **Other Hardware MFA Device** sau đó nhấn **Continue**.
-9. Nhập **Serial Number** ở đằng sau thiết bị.
+**INSERT IMAGE HERE**
 
-![Image](/images/1-account-setup/HardwareMFA.png?width=30pc)
+**INSERT IMAGE HERE**
 
-10. Nhập MFA code 1 sau đó đợi 30 giây và nhập MFA code 2.
-11. Chọn **Assign MFA**.
+Thực hiện một số truy vấn để kiểm tra
+
+```sql
+SELECT * FROM Clients;
+```
+
+**INSERT IMAGE HERE**
+
+#### Triển khai Web Server
+
+Sau khi dữ liệu đã được thêm thành công, thì giờ chúng ta sẽ khởi động Web Server, đầu tiên là vào trong thư mục `backend` sửa đổi lại nội dung trong file `.env`.
+
+```bash
+NODE_ENV=development
+PORT=5000
+JWT_SECRET=0bac010eca699c25c8f62ba86e319c2305beb94641b859c32518cb854addb5f4
+# Thay Username của user đã thiết lập từ trước.
+DB_USER=admin
+DB_NAME=fcjresbar
+# Thay Password của user đã thiết lập từ trước.
+DB_PASSWORD=yourpassword
+DB_HOST=localhost
+DB_DIALECT=mysql
+```
+
+Mở **Terminal** ở trong thư mục này và tiến hành cài đặt các NPM Packages
+
+```bash
+npm install
+```
+
+**INSERT IMAGE HERE**
+
+Sau đó là khởi chạy server
+
+```bash
+npm run dev
+```
+
+**INSERT IMAGE HERE**
+
+Và Web Server đã chạy thành công.
+
+#### Triển khai Client Application
+
+Tiếp theo, mình sẽ triển khai ứng dụng người dùng cuối, vào trong thư mục `frontend`, mở **Terminal** và cài đặt các NPM Packages.
+
+```bash
+npm install
+```
+
+**INSERT IMAGE HERE**
+
+Trước khi khởi chạy ứng dụng thì mình sẽ cần phải thay đổi lại nội dung trong file `vite.config.js` như đoạn cấu hình mẫu ở bên dưới
+
+```js
+/// <reference types="vite/client" />
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      "/api": {
+        // API Endpoint của Web Server
+        target: "http://localhost:5000/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+});
+```
+
+{{% notice note%}}
+Đoạn cấu hình trên là chúng ta đã cài đặt proxy cho Vite, nghĩa là khi có request url mà có /api ở trong đó, thì sẽ được thay thế bởi chuỗi **target**.
+{{% /notice%}}
+
+Khởi chạy ứng dụng
+
+```bash
+npm run dev
+```
+
+**INSERT IMAGE HERE**
+
+#### Kết luận
+
+Từ các bước triển khai từ đầu phần **Triển khai trên Local** này tới phần này, thì chúng ta có thể rút ra được một số điều sau:
+
+- Triển khai thủ công rất cực, phải cài đặt rất nhiều thứ. Vì thế mà phần sau chúng ta sẽ dùng Linux và Docker để triển khai toàn bộ ứng dụng này.
+- Nếu như ứng dụng được phát triển và triển khai trên nền tảng là Windows, thì khi chuyển sang các nền tảng khác thì cũng sẽ khó cho việc chuyển đổi.
+- Nếu như chúng ta trển khai ứng dụng này lên môi trường thật, với chiến lược và kiến trúc như thế này thì hệ thống sẽ không mang tính đảm bảo cao.
+- Không đảm bảo được "môi trường" cho các ứng dụng. Khi mà chúng ta triển khai như thế này, thì các ứng dụng đang xài chung một nguồn tài nguyên với nhau, và với các phần mềm khác ở trong máy. Đôi khi sẽ xảy ra một số lỗi từ một phần mềm hoặc ứng dụng khác, việc này sẽ làm ảnh hưởng tới hệ thống ứng dụng của chúng ta.
