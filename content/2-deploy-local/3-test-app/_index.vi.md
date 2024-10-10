@@ -6,27 +6,25 @@ chapter = false
 pre = "<b>2.3. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Kiểm tra kết quả triển khai
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Đầu tiên, thì chúng ta sẽ cần vào đường dẫn đã được mở ra ở trong lần chiển khai trước đó `http://localhost:5173`. Khi đó thì chúng ta sẽ nhận được giao diện như sau
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+![2.3.1](/images/2-deploy-local/2.3.1.png)
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+Dùng 1 trong hai tài khoản sau để đăng nhập:
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+- User: email `user@example.com`; password `123456`.
+- Admin: email `admin@example.com`; password `123456`.
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+Sau khi đăng nhập xong thì các bạn có thể thấy được nội dung ở bên web như sau
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![2.3.2](/images/2-deploy-local/2.3.2.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+Chuyển sang một số trang khác để xem thêm kết quả
+
+![2.3.3](/images/2-deploy-local/2.3.3.png)
+
+![2.3.4](/images/2-deploy-local/2.3.4.png)
+
+Ok, vậy thì chứng tỏ là hệ thống ở dưới local của chúng ta đã triển khai thành công. Sang phần tiếp theo, chúng ta sẽ chuẩn bị triển khai lên **AWS Cloud** và dùng **Docker**.

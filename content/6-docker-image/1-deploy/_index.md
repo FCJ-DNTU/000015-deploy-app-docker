@@ -6,27 +6,113 @@ chapter = false
 pre = "<b>6.1. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+In the previous **2 Deploy on Local** section, we manually deployed the following:
 
-#### Activate virtual MFA devices via Console
+- Database Server
+- NginX Server
+- Web Server
+- End User Application
 
-To set up and activate virtual MFA devices:
+There were many limitations, as mentioned earlier, so now we will deploy this infrastructure on the Cloud using Docker. This means we no longer need to worry about downloading and installing. If you are familiar with the basic concepts of Docker (especially networking), this part won't be too difficult.
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+In step **4 Configure RDS**, we already configured the Database Server with Amazon RDS, so from a technical, maintenance, and security perspective, we won't need to worry much about access or data safety anymore. Therefore, in this cloud deployment, we will focus on deploying the remaining applications with Docker Images.
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+In the following sections, we will deploy with Docker Compose, allowing you to see the difference when deploying locally with Docker Images on the Cloud and with Docker Compose on the Cloud.
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+#### Deploying the Web Server
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+First, we will need the Endpoint of the RDS we created earlier.
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+- Go to the RDS Console.
+- Select the RDS Instance you just created.
+- Copy the Endpoint.
+
+![6.1.1](/images/6-docker-image/6.1.1.png)
+
+Source directory:
+
+![6.1.2](/images/6-docker-image/6.1.2.png)
+
+Navigate to the source directory that we cloned earlier, `aws-fcj-container-app`. In the `backend` folder, we will modify the `.env` file, specifically the `DB_HOST` variable.
+
+![6.1.3](/images/6-docker-image/6.1.3.png)
+
+![6.1.4](/images/6-docker-image/6.1.4.png)
+
+Now our web server is ready to run. Next, execute the command below:
+
+```bash
+docker build . -t backend-image
+```
+
+![6.1.5](/images/6-docker-image/6.1.5.png)
+
+Before starting the Container for the web server, we need to create a **network** for the containers to communicate with each other.
+
+```bash
+docker network create my-network
+```
+
+Next, run the Docker Container with the newly created Docker Image:
+
+```bash
+docker run -p 5000:5000 --network my-network --name backend backend-image
+```
+
+![6.1.7](/images/6-docker-image/6.1.7.png)
+
+#### Deploying the Application
+
+Now, open a new SSH Session and follow similar steps as above, but this time, we will deploy the Application.
+
+![6.1.8](/images/6-docker-image/6.1.8.png)
+
+- `cd` into the `frontend` directory
+- Run the command below:
+
+```bash
+docker build . -t frontend-image
+```
+
+![6.1.9](/images/6-docker-image/6.1.9.png)
+
+Next, run the Docker Container with the newly created Docker Image:
+
+```bash
+docker run --network my-network --name frontend frontend-image
+```
+
+![6.1.10](/images/6-docker-image/6.1.10.png)
+
+#### Deploying the Nginx Server
+
+Open another session. Before starting the Nginx Server, check if the previous containers are still running:
+
+```bash
+docker ps
+```
+
+![6.1.11](/images/6-docker-image/6.1.11.png)
+
+Ok, everything is running as expected.
+
+To ensure the system runs smoothly, we will add one more step: deploying the Nginx Server, which will act as a Proxy Server. Start the Nginx Server by:
+
+- `cd` into the `nginx` directory
+- Run the command below:
+
+```bash
+docker build . -t nginx-image
+```
+
+![6.1.12](/images/6-docker-image/6.1.12.png)
+
+Next, run the Docker Container with the newly created Docker Image:
+
+```bash
+docker run -p 3000:80 --network my-network --name nginx nginx-image
+```
+
+![6.1.13](/images/6-docker-image/6.1.13.png)
+
+Now, the application is ready for testing.

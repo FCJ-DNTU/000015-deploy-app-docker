@@ -6,27 +6,62 @@ chapter = false
 pre = "<b>2.1. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+{{% notice note%}}
+Trong bài này thì chúng ta sẽ thực hành trên máy Windows.
+{{% /notice%}}
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+#### Cài đặt NodeJS
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+Để cho dễ hình dung hơn, thì bạn nên theo dõi video dưới đây để cài đặt NodeJS trên máy vi tính cá nhân của bạn.
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+{{< youtube 4FAtFwKVhn0 >}}
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+#### Cài đặt MySQL Community
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+Tương tự, xem thêm video này để cài đặt MySQL
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+{{< youtube u96rVINbAUI >}}
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+Một số lưu ý khi cài đặt MySQL:
+
+- Các bạn nên cài cả **MySQL Client** và **MySQL Server** để tiện kiểm tra, đồng thời là cài luôn **MySQL Workbench** và **MySQL Shell**, là một hệ quản trị cơ sở dữ liệu giống với Microsoft SQL Server Management Studio của Microsoft SQL Server. Và có thể sau này bạn sẽ cần nó trong một số dự án khác.
+- Trong MySQL cũng sẽ có 2 users là Root User và các User còn lại, các user này sẽ có các vai trò khác nhau. Nhưng phải luôn nhớ mật khẩu của Root User, đồng thời là thêm một tài khoản mới khi cài đặt MySQL Server.
+
+#### Kết quả
+
+Khi cài đặt NodeJS xong, chúng ta sẽ có được luôn npm ở trong gói cài đặt đó, kiểm tra xem NodeJS và NPM đã cài đặt thành công hay chưa thông qua 2 câu lệnh
+
+```bash
+node -v
+npm -v
+```
+
+![2.1.1](/images/2-deploy-local/2.1.1.png)
+
+#### Sử dụng MySQL Shell
+
+Nhập `MySQL Shell` trên thanh tìm kiểm của windows, sau đó ấn chọn `MySQL Shell`.
+
+![2.1.2](/images/2-deploy-local/2.1.2.png)
+
+Khi mở lên thì chúng ta sẽ có được giao diện như sau
+
+![2.1.3](/images/2-deploy-local/2.1.3.png)
+
+Gõ `\sql` để chuyển Input Mode sang MySQL.
+
+![2.1.4](/images/2-deploy-local/2.1.4.png)
+
+Sau đó là chúng ta sẽ kết nối tới MySQL Server
+
+![2.1.5](/images/2-deploy-local/2.1.5.png)
+
+{{% notice note%}}
+Nếu như bạn không tạo user trong quá trình cài đặt MySQL, thì có thể kết nối tới MySQL Server bằng Root User, khi đó **connection string** sẽ là `root@localhost` và nhớ nhập mật khẩu cho Root User mà bạn đã đặt trong quá trình cài đặt.
+{{% /notice%}}
+
+Dùng lệnh `SHOW DATABASES;` để kiểm tra kết quả lần nữa.
+
+![2.1.6](/images/2-deploy-local/2.1.6.png)
+
+Khi ra được kết quả này thì có nghĩa là bạn đã cài đặt đúng phần này và có thể chuyển tiếp tới phần tiếp theo.

@@ -12,10 +12,9 @@ Truy cập vào địa chỉ IP của **EC2** mà chúng ta đã tạo ra �
 
 ![Image](/images/7-docker-compose/2-test-app/7.6.png?featherlight=false&width=90pc)
 
-Tại đây chúng ta thấy được trang chủ của ứng dụng. Tiền hành nhập thông tin đăng nhập
+Tại đây chúng ta thấy được trang chủ của ứng dụng giống như kết quả triển khai trước. Tiến hành nhập thông tin đăng nhập
 
 ![Image](/images/7-docker-compose/2-test-app/7.7.png?featherlight=false&width=90pc)
-
 
 {{% notice note%}}
 Nếu thông tin đăng nhập đúng, điều đó có nghĩa là ứng dụng được triển khai với RDS thành công.
@@ -28,5 +27,3 @@ Một vài hình ảnh về ứng dụng.
 ![Image](/images/7-docker-compose/2-test-app/7.9.png?featherlight=false&width=90pc)
 
 ![Image](/images/7-docker-compose/2-test-app/7.10.png?featherlight=false&width=90pc)
-
-

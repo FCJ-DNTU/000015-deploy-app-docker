@@ -6,78 +6,108 @@ chapter = false
 pre = "<b>2.2. </b>"
 +++
 
-{{%notice info%}}
-The following steps require a hardware MFA device.
-{{%/notice%}}
+{{% notice note%}}
+To complete this part, you must have Git installed beforehand.
+{{% /notice%}}
 
-#### Enabling a hardware MFA device through Console
+#### Download Source Code
 
-A hardware MFA device generates a six-digit numeric code based upon a time-synchronized one-time password algorithm. 
-Hardware MFA devices and U2F security keys are both physical devices that you purchase. The difference is that hardware MFA devices generate a code that you view and then enter when prompted when signing it to AWS. 
+First,
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you'll see your account name, select and select **My Security Credentials**.
+- Create a folder with any name (I'll call it `workspace`).
+- Right-click and select **Open in Terminal**.
 
-![Image](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+![2.2.1](/images/2-deploy-local/2.2.1.png)
 
-**Note:** To manage a hardware MFA device for your own IAM user while protecting sensitive MFA-related actions, you must have the permissions from the following policy.
-<!-- policy not associated with user -->
-> 1. In the left bar, select **Policies** then select **Create policy**. Select **JSON** tab and paste the policy document from below:
-> 
-> ```json
-> {
->     "Version": "2012-10-17",
->     "Statement": [
->         {
->             "Sid": "AllowManageOwnUserMFA",
->             "Effect": "Allow",
->             "Action": [
->                 "iam:DeactivateMFADevice",
->                 "iam:EnableMFADevice",
->                 "iam:GetUser",
->                 "iam:ListMFADevices",
->                 "iam:ResyncMFADevice"
->             ],
->             "Resource": "arn:aws:iam::*:user/${aws:username}"
->         },
->         {
->             "Sid": "DenyAllExceptListedIfNoMFA",
->             "Effect": "Deny",
->             "NotAction": [
->                 "iam:EnableMFADevice",
->                 "iam:GetUser",
->                 "iam:ListMFADevices",
->                 "iam:ResyncMFADevice"
->             ],
->             "Resource": "arn:aws:iam::*:user/${aws:username}",
->             "Condition": {
->                 "BoolIfExists": {
->                     "aws:MultiFactorAuthPresent": "false"
->                 }
->             }
->         }
->     ]
-> }
-> ```
-> 
-> 2. Select **Next: Tags**. You'll be presented with a screen about **Tags**, a tool used to identify groups of AWS resources.
-> 3. Select **Next: Review**. This is a screen that allows you to review the policy that you are creating. 
-> 4. Enter the name of the policy (for example, `MFAHardDevice`) and select **Create policy**.
-> 
-> ![MFA Policy](/images/1-account-setup/MFAPolicy.png?width=90pc)
+Clone the application's source code from GitHub to your machine.
 
-3. In the left bar, select **Dashboard** and then select **Enable MFA**.
+**INSERT IMAGE HERE**
 
-![Dashboard](/images/1-account-setup/Dashboard.png?width=90pc)
+REPLACE HERE
 
-4. Expand Multi-factor authentication (MFA) and then select **Active MFA**.
+And here is the result:
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![2.2.2](/images/2-deploy-local/2.2.2.png)
 
-5. Under **Manage MFA Device**, select **Other Hardware MFA Device** then press **Continue**.
-6. Enter **Serial Number** in the back of the device.
+#### Add Data
 
-![Image](/images/1-account-setup/HardwareMFA.png?width=30pc)
+To add data:
 
-7. Enter MFA code 1. Wait 30 seconds or until the code changes, then enter MFA code 2.
-8. Select **Assign MFA**.
+- Go to the `database` folder inside the source code folder you downloaded.
+- Copy the path from the Browse bar in Windows.
+- Paste the path into MySQL Shell, adding the script name (`init.sql`) to the pasted string.
+
+![2.2.3](/images/2-deploy-local/2.2.3.png)
+
+Use MySQL Shell to connect to MySQL Server. The connection steps are similar to the previous section. In the project folder, you'll notice a `database` folder containing SQL scripts to create the database, tables, constraints, and add data. In this step, we'll use the `source` command to run the script.
+
+![2.2.4](/images/2-deploy-local/2.2.4.png)
+
+![2.2.5](/images/2-deploy-local/2.2.5.png)
+
+Run some queries to verify:
+
+REPLACE HERE
+
+![2.2.6](/images/2-deploy-local/2.2.6.png)
+
+#### Deploy Web Server
+
+After the data is successfully added, we will start the Web Server. First,
+
+- Go into the `backend` folder and modify the contents of the `.env` file.
+
+REPLACE HERE
+
+- Then open the **Terminal** in this folder.
+- Proceed to install the NPM packages to run the server.
+
+REPLACE HERE
+
+![2.2.7](/images/2-deploy-local/2.2.7.png)
+
+Next, start the server:
+
+REPLACE HERE
+
+![2.2.8](/images/2-deploy-local/2.2.8.png)
+
+And the Web Server has successfully started.
+
+#### Deploy Client Application
+
+Next, I'll deploy the client application:
+
+- Go to the `frontend` folder.
+- Open the **Terminal** and install the NPM packages.
+
+REPLACE HERE
+
+![2.2.9](/images/2-deploy-local/2.2.9.png)
+
+Before running the application, I need to update the content in the `vite.config.js` file, as shown in the sample configuration below:
+
+REPLACE HERE
+
+{{% notice note%}}
+The above configuration sets up a proxy for Vite, meaning that when a request URL contains `/api`, it will be replaced by the **target** string.
+{{% /notice%}}
+
+Run the application:
+
+```bash
+npm run dev
+```
+
+![2.2.10](/images/2-deploy-local/2.2.10.png)
+
+After this section, we'll check the deployment results.
+
+#### Conclusion
+
+From the deployment steps from the beginning of the Local Deployment section to this point, we can draw some conclusions:
+
+- Manual deployment is exhausting, requiring a lot of installations. In the next section, we will use Linux and Docker to deploy the entire application.
+- If the application is developed and deployed on Windows, switching to other platforms may be difficult.
+- If we deploy this application to a real environment with this strategy and architecture, the system won't be highly reliable.
+- It doesn't ensure the "environment" for the applications. When deploying this way, the applications share the same resources, and with other software on the machine. Sometimes errors from other software or applications may affect our system.

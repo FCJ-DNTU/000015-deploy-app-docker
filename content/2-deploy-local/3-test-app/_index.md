@@ -6,27 +6,25 @@ chapter = false
 pre = "<b>2.3. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+#### Check Deployment Results
 
-#### Activate virtual MFA devices via Console
+First, we need to go to the URL that was opened during the previous deployment: `http://localhost:5173`. At that point, you will see the following interface:
 
-To set up and activate virtual MFA devices:
+![2.3.1](/images/2-deploy-local/2.3.1.png)
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+Use one of the following accounts to log in:
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+- User: email `user@example.com`; password `123456`.
+- Admin: email `admin@example.com`; password `123456`.
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+After logging in, you will see the content on the web as follows:
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![2.3.2](/images/2-deploy-local/2.3.2.png)
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+Navigate through some other pages to see more results:
+
+![2.3.3](/images/2-deploy-local/2.3.3.png)
+
+![2.3.4](/images/2-deploy-local/2.3.4.png)
+
+Ok, this proves that our local system has been successfully deployed. In the next section, we will prepare to deploy to **AWS Cloud** using **Docker**.
