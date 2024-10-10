@@ -84,3 +84,19 @@ docker-compose -v
 ```
 
 ![5.1.11](/images/5-configure-ec2/5.1.11.png)
+
+#### Gắn Role ECR cho EC2
+
+Ở giao diện quan lý EC2 instance
+
+- Chọn EC2 **FCJ-Lab-vpc**
+- Chọn **Action**
+- Chọn **Security**
+- Chọn **Modify IAM role**
+
+![5.1.12](/images/5-configure-ec2/5.1.12.png)
+
+- Chọn Role **CustomeRWECRRole**
+- Chọn **Update IAM role**
+
+![5.1.13](/images/5-configure-ec2/5.1.13.png)

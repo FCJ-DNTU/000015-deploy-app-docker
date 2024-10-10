@@ -6,7 +6,7 @@ chapter = false
 pre = "<b>5. </b>"
 +++
 
-#### Creating
+### Configuring EC2 Instance
 
 In this section, we will create an EC2 server, install the necessary libraries, and add data to the previously created database for an Administrator Group.
 
