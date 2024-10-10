@@ -6,27 +6,27 @@ chapter = false
 pre = "<b>7.2. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Kiểm tra ứng dụng
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Truy cập vào địa chỉ IP của **EC2** mà chúng ta đã tạo ra ở phần trước và truy cập vào địa chỉ **http://[ip-address]:3000**.
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+![Image](/images/7-docker-compose/2-test-app/7.6.png?featherlight=false&width=90pc)
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+Tại đây chúng ta thấy được trang chủ của ứng dụng. Tiền hành nhập thông tin đăng nhập
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+![Image](/images/7-docker-compose/2-test-app/7.7.png?featherlight=false&width=90pc)
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+{{% notice note%}}
+Nếu thông tin đăng nhập đúng, điều đó có nghĩa là ứng dụng được triển khai với RDS thành công.
+{{% /notice%}}
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+![Image](/images/7-docker-compose/2-test-app/7.8.png?featherlight=false&width=90pc)
+
+Một vài hình ảnh về ứng dụng.
+
+![Image](/images/7-docker-compose/2-test-app/7.9.png?featherlight=false&width=90pc)
+
+![Image](/images/7-docker-compose/2-test-app/7.10.png?featherlight=false&width=90pc)
+
+
