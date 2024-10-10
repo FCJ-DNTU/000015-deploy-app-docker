@@ -1,32 +1,130 @@
 +++
-title = "Create IAM Role to access to ECR"
+title = "Create IAM Roles for ECR Access"
 date = 2024
 weight = 3
 chapter = false
 pre = "<b>3.3. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+#### Policy Configuration
 
-#### Activate virtual MFA devices via Console
+In the AWS Console interface:
 
-To set up and activate virtual MFA devices:
+- Search for and select `IAM`
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+![3.3.1](/images/3-preparation/3.3.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+In the right selection menu:
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+- Select **Policy**
+- Click on **Create Policy**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![3.3.2](/images/3-preparation/3.3.2.png)
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+In the Policy Editor:
+
+- Search for and select **Elastic Container Registry**
+- Click **Next**
+
+![3.3.3](/images/3-preparation/3.3.3.png)
+
+A rule selection panel appears:
+
+- In the **List** section:
+  - Select **DescribeImage**
+  - Select **ListImages**
+- In the **Read** section:
+  - Select **BatchGetImage**
+  - Select **DescribeRegistry**
+  - Select **DescribeRepositories**
+  - Select **GetAccountSetting**
+  - Select **GetAuthorizationToken**
+
+![3.3.4](/images/3-preparation/3.3.4.png)
+
+- In the **Resources** section:
+  - Select **Specific**
+  - Select **Any in this account**
+  - Click **Next**
+
+![3.3.5](/images/3-preparation/3.3.5.png)
+
+In the Policy details section:
+
+- Policy name: `ReadECRRepositoryContent`
+- Description: `Allow pull images, describe repositories`
+
+![3.3.6](/images/3-preparation/3.3.6.png)
+
+- Click **Create policy**
+
+![3.3.7](/images/3-preparation/3.3.7.png)
+
+Similarly, we will create an additional policy for writing to ECR:
+
+- Click **Create Policy**
+
+A rule selection panel appears:
+
+- In the **Read** section:
+  - Select **BatchCheckLayerAvailability**
+  - Select **GetAuthorizationToken**
+- In the **Write** section:
+  - Select **CompleteLayerUpload**
+  - Select **InitialLayerUpload**
+  - Select **PutImage**
+  - Select **UploadLayerPart**
+
+![3.3.8](/images/3-preparation/3.3.8.png)
+
+- In the **Resources** section:
+  - Select **Any in this account**
+  - Click **Next**
+
+![3.3.9](/images/3-preparation/3.3.9.png)
+
+The Policy details panel appears:
+
+- Policy name: `WriteECRRepositoryContent`
+- Description: `Allow push and delete images`
+
+![3.3.10](/images/3-preparation/3.3.10.png)
+
+- Click **Create policy**
+
+![3.3.11](/images/3-preparation/3.3.11.png)
+
+#### Create Role for ECR
+
+In the EC2 management interface:
+
+- Select **Roles**
+- Click on **Create role**
+
+![3.3.12](/images/3-preparation/3.3.12.png)
+
+- Select **AWS service**
+- Choose **EC2**
+
+![3.3.13](/images/3-preparation/3.3.13.png)
+
+- Click **Next**
+
+![3.3.14](/images/3-preparation/3.3.14.png)
+
+- Filter by Type: **Customer managed**
+- Select the two policies we just created
+- Click **Next**
+
+![3.3.15](/images/3-preparation/3.3.15.png)
+
+In the Role details section:
+
+- Role name: `CustomRWECRRole`
+- Description: `Custom Read and Write role for ECS`
+
+![3.3.16](/images/3-preparation/3.3.16.png)
+
+- Click **Create role**
+
+![3.3.17](/images/3-preparation/3.3.17.png)

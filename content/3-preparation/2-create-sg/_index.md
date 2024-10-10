@@ -1,32 +1,68 @@
 +++
-title = "Create Security Group"
+title = "Security Group Configuration"
 date = 2024
 weight = 2
 chapter = false
 pre = "<b>3.2. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+#### Security Group Configuration for EC2
 
-#### Activate virtual MFA devices via Console
+In the EC2 management interface, in the left selection menu:
 
-To set up and activate virtual MFA devices:
+- Select **Security Groups**
+- Click on **Create security group**
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+![3.2.1](/images/3-preparation/3.2.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+Configure the Security Group:
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+- In the **Basic details** section:
+  - Security group name: `FCJ-Lab-sg-public`
+  - Description: `Security group for FCJ Lab`
+  - VPC: **FCJ-Lab-vpc**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![3.2.2](/images/3-preparation/3.2.2.png)
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+- In the **Inbound rules** section, add the following rules:
+  - Type: **SSH**, Source: **Anywhere-IPv4**
+  - Type: **HTTP**, Source: **Anywhere-IPv4**
+  - Type: **HTTPS**, Source: **Anywhere-IPv4**
+  - Type: **Custom TCP**, Port range: **3000**, Source: **Anywhere-IPv4**
+
+![3.2.3](/images/3-preparation/3.2.3.png)
+
+- For the **Outbound rules**, we will leave it as default.
+- Click on **Create security group**.
+
+#### Security Group Configuration for Database Instance
+
+Similar to the steps for creating a security group for EC2:
+
+- Select **Security Groups**
+- Click on **Create security group**
+
+![3.2.1](/images/3-preparation/3.2.1.png)
+
+Configure the Security Group:
+
+- In the **Basic details** section:
+  - Security group name: `FCJ-Lab-sg-db`
+  - Description: `Security group for RDS database instance`
+  - VPC: **FCJ-Lab-vpc**
+
+![3.2.5](/images/3-preparation/3.2.5.png)
+
+- In the **Inbound rules** section:
+  - Select Type: **MYSQL/Aurora**
+  - Source: Select **FCJ-Lab-sg**
+
+![3.2.6](/images/3-preparation/3.2.6.png)
+
+- For the **Outbound rules**:
+
+  - Leave it as default.
+
+- Click on **Create security group**.
+
+![3.2.7](/images/3-preparation/3.2.7.png)
