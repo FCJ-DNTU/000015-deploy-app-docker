@@ -6,27 +6,26 @@ chapter = false
 pre = "<b>4.1. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Tạo Subnet Group DB
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+- Tìm kiếm từ khóa: **RDS** 
+- Chọn phần: **Subnet groups**
+- Chọn: **Create DB subnet group**
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+![RDS](/images/4-rds/4.1.1.png)
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+- Nhập tên: **`fcj-lab-subnet-group-db`**
+- Nhập mô tả: **`Subnet Group for FCJ Management`**
+- Chọn VPC đã được tạo từ trước là **FCJ-Lab-vpc**
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+![RDS](/images/4-rds/4.1.2.png)
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+- Chọn **Availability Zones** đã được tạo chung với **VPC** từ trước đó
+- Chọn 2 **Subnet private**
+- Kiểm tra lại và chọn **Create**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![RDS](/images/4-rds/4.1.3.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+- Hoành thành tạo một **Subnet groups**
+
+![RDS](/images/4-rds/4.1.4.png)

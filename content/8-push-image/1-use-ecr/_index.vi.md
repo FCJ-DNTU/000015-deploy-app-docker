@@ -6,27 +6,115 @@ chapter = false
 pre = "<b>8.1. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Tạo ECR repository
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+- Tìm kiếm **Amazon Elastic Container Registry**
+- Chọn **Create**
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+![RDS](/images/8-push-image/8.1.1.png)
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+- Nhập tên: **`fcj-lab-ecr`**
+- Chọn cấu hình cho phù hợp
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+![RDS](/images/8-push-image/8.1.2.png)
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+- Phần mã hóa để mặc định hoặc chọn cấu hình cho phù hợp
+- Chọn để bật **Scan on push**
+- Chọn **Create**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![RDS](/images/8-push-image/8.1.3.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+- Hoàn tất tạo một repository trong ECR
+
+![RDS](/images/8-push-image/8.1.4.png)
+
+- Truy cập vào tên repository đó, chọn **View push commands** để xem cách push images
+
+![RDS](/images/8-push-image/8.1.5.png)
+
+#### Vào lại EC2 instance đã được ssh sẵn
+
+- Tải **AWS CLI** bằng các lệnh sau
+```
+sudo apt -y update
+sudo apt -y install unzip curl
+sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+```
+
+![RDS](/images/8-push-image/8.1.6.png)
+
+![RDS](/images/8-push-image/8.1.7.png)
+
+- Giải nén và kiểm tra
+```
+sudo unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+```
+
+![RDS](/images/8-push-image/8.1.8.png)
+
+![RDS](/images/8-push-image/8.1.9.png)
+
+- Đăng nhập vào **ECR** bằng lệnh mẫu sau
+```
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin <Account_ID>.dkr.ecr.ap-southeast-1.amazonaws.com
+```
+{{% notice note%}}
+Nếu như bị lỗi phần này thì mình khuyến nghị bạn nên kiểm tra lại xem EC2 instance của bạn đã được cấp quyền truy cập ECR chưa nếu chưa cần phải cấp cho nó hoặc là dùng **aws config** để đăng nhập bằng credentials của AWS.
+{{% /notice%}}
+
+![RDS](/images/8-push-image/8.1.10.png)
+
+- Build các image nginx đầu tiên 
+```
+ls
+cd nginx/
+sudo docker build -t fcj-nginx .
+```
+
+![RDS](/images/8-push-image/8.1.11.png)
+
+- Build các image frontend 
+```
+cd ...
+cd frontend/
+sudo docker build -t fcj-frontend .
+```
+
+![RDS](/images/8-push-image/8.1.12.png)
+
+- Build các image backend 
+```
+cd ...
+cd backend/
+sudo docker build -t fcj-backend .
+```
+
+![RDS](/images/8-push-image/8.1.13.png)
+
+- Kiểm tra các images được build thành công
+- Gắn tag cho từng images để có thể push lên ECR 
+```
+sudo docker images
+sudo docker tag <image>:<tag> <Account_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/<Repository_Name>:<Name_tag>
+sudo docker images
+```
+
+![RDS](/images/8-push-image/8.1.14.png)
+
+- Push images lên **ECR repository**
+```
+sudo docker images
+sudo docker push <Account_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/<Repository_Name>:<Name_tag>
+sudo docker images
+```
+{{% notice note%}}
+Nếu như bị lỗi phần này thì mình khuyên bạn nên chuyển qua sử dụng **root** để có thể tối ưu hóa quyền để push images lên ECR
+{{% /notice%}}
+
+![RDS](/images/8-push-image/8.1.15.png)
+
+- Kiểm tra images được push ở trên **ECR repository**
+
+![RDS](/images/8-push-image/8.1.16.png)
