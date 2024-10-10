@@ -7,26 +7,61 @@ pre = "<b>2.1. </b>"
 +++
 
 {{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
+In this article, we will practice on a Windows machine.
 {{% /notice%}}
 
-#### Activate virtual MFA devices via Console
+#### Install NodeJS
 
-To set up and activate virtual MFA devices:
+For better understanding, you should follow the video below to install NodeJS on your personal computer.
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+{{< youtube 4FAtFwKVhn0 >}}
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+#### Install MySQL Community
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+Similarly, watch this video to install MySQL:
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+{{< youtube u96rVINbAUI >}}
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+Some notes when installing MySQL:
+
+- You should install both **MySQL Client** and **MySQL Server** for easier testing. Also, install **MySQL Workbench** and **MySQL Shell**, which is a database management system similar to Microsoft SQL Server Management Studio for Microsoft SQL Server. You may need them in some future projects.
+- In MySQL, there are two types of users: Root User and other users, each with different roles. Always remember the password for the Root User, and add a new account when installing MySQL Server.
+
+#### Results
+
+Once NodeJS is installed, npm will also be included in the package. Check whether NodeJS and npm have been successfully installed using the following two commands:
+
+```bash
+node -v
+npm -v
+```
+
+![2.1.1](/images/2-deploy-local/2.1.1.png)
+
+#### Using MySQL Shell
+
+Search for `MySQL Shell` in the Windows search bar, then select `MySQL Shell`.
+
+![2.1.2](/images/2-deploy-local/2.1.2.png)
+
+When opened, you will see the following interface:
+
+![2.1.3](/images/2-deploy-local/2.1.3.png)
+
+Type `\sql` to switch the Input Mode to MySQL.
+
+![2.1.4](/images/2-deploy-local/2.1.4.png)
+
+Then, connect to the MySQL Server.
+
+![2.1.5](/images/2-deploy-local/2.1.5.png)
+
+{{% notice note%}}
+If you didn’t create a user during the MySQL installation, you can connect to the MySQL Server using the Root User. In that case, the **connection string** will be `root@localhost`, and don't forget to enter the Root User password you set during installation.
+{{% /notice%}}
+
+Use the `SHOW DATABASES;` command to check the result again.
+
+![2.1.6](/images/2-deploy-local/2.1.6.png)
+
+If you get this result, it means you have installed this part correctly and can proceed to the next section.

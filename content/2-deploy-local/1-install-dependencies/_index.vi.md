@@ -36,25 +36,25 @@ node -v
 npm -v
 ```
 
-**INSERT IMAGE HERE**
+![2.1.1](/images/2-deploy-local/2.1.1.png)
 
 #### Sử dụng MySQL Shell
 
 Nhập `MySQL Shell` trên thanh tìm kiểm của windows, sau đó ấn chọn `MySQL Shell`.
 
-**INSERT IMAGE HERE**
+![2.1.2](/images/2-deploy-local/2.1.2.png)
 
 Khi mở lên thì chúng ta sẽ có được giao diện như sau
 
-**INSERT IMAGE HERE**
+![2.1.3](/images/2-deploy-local/2.1.3.png)
 
 Gõ `\sql` để chuyển Input Mode sang MySQL.
 
-**INSERT IMAGE HERE**
+![2.1.4](/images/2-deploy-local/2.1.4.png)
 
 Sau đó là chúng ta sẽ kết nối tới MySQL Server
 
-**INSERT IMAGE HERE**
+![2.1.5](/images/2-deploy-local/2.1.5.png)
 
 {{% notice note%}}
 Nếu như bạn không tạo user trong quá trình cài đặt MySQL, thì có thể kết nối tới MySQL Server bằng Root User, khi đó **connection string** sẽ là `root@localhost` và nhớ nhập mật khẩu cho Root User mà bạn đã đặt trong quá trình cài đặt.
@@ -62,6 +62,6 @@ Nếu như bạn không tạo user trong quá trình cài đặt MySQL, thì có
 
 Dùng lệnh `SHOW DATABASES;` để kiểm tra kết quả lần nữa.
 
-**INSERT IMAGE HERE**
+![2.1.6](/images/2-deploy-local/2.1.6.png)
 
 Khi ra được kết quả này thì có nghĩa là bạn đã cài đặt đúng phần này và có thể chuyển tiếp tới phần tiếp theo.

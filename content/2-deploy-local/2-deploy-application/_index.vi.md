@@ -12,9 +12,12 @@ pre = "<b>2.2. </b>"
 
 #### Tải mã nguồn
 
-Tạo một folder với tên bất kỳ (mình đặt là `workspace`), click chuột phải chọn **Open in Terminal**.
+Đầu tiên
 
-**INSERT IMAGE HERE**
+- Tạo một folder với tên bất kỳ (mình đặt là `workspace`).
+- Click chuột phải chọn **Open in Terminal**.
+
+![2.2.1](/images/2-deploy-local/2.2.1.png)
 
 Clone mã nguồn của ứng dụng từ trên Github về trên máy.
 
@@ -24,7 +27,9 @@ Clone mã nguồn của ứng dụng từ trên Github về trên máy.
 git clone https://github.com/FCJ-DNTU/fcj-resbar.git
 ```
 
-**INSERT IMAGE HERE**
+Và đây là kết quả
+
+![2.2.2](/images/2-deploy-local/2.2.2.png)
 
 #### Thêm dữ liệu
 
@@ -34,13 +39,13 @@ git clone https://github.com/FCJ-DNTU/fcj-resbar.git
 - Sao chép đường dẫn ở trên thanh Browse của window.
 - Dán đường dẫn vào trong MySQL Shell, thêm tên của script (`init.sql`) vào trong chuỗi mới dán vào.
 
-**INSERT IMAGE HERE**
+![2.2.3](/images/2-deploy-local/2.2.3.png)
 
 Vào MySQL Shell để kết nối tới MySQL Server, các bước kết nối tương tự như ở phần trước. Trong thư mục của dự án, bạn sẽ để ý thấy có một thư mục tên là `database`, trong này chứa script SQL để tạo cơ sở dữ liệu, bảng, các ràng buộc và thêm dữ liệu. Trong bước này thì chúng ta sẽ dùng lệnh `source` để chạy script.
 
-**INSERT IMAGE HERE**
+![2.2.4](/images/2-deploy-local/2.2.4.png)
 
-**INSERT IMAGE HERE**
+![2.2.5](/images/2-deploy-local/2.2.5.png)
 
 Thực hiện một số truy vấn để kiểm tra
 
@@ -48,32 +53,40 @@ Thực hiện một số truy vấn để kiểm tra
 SELECT * FROM Clients;
 ```
 
-**INSERT IMAGE HERE**
+![2.2.6](/images/2-deploy-local/2.2.6.png)
 
 #### Triển khai Web Server
 
-Sau khi dữ liệu đã được thêm thành công, thì giờ chúng ta sẽ khởi động Web Server, đầu tiên là vào trong thư mục `backend` sửa đổi lại nội dung trong file `.env`.
+Sau khi dữ liệu đã được thêm thành công, thì giờ chúng ta sẽ khởi động Web Server, đầu tiên
+
+- Vào trong thư mục `backend` sửa đổi lại nội dung trong file `.env`.
 
 ```bash
+# Change these information
+## Thay đổi các thông tin sau phù hợp với cấu hình
+## trong lúc bạn cài đặt
+MYSQL_USER=admin
+MYSQL_PASSWORD=letmein12345
+MYSQL_DATABASE=fcjresbar
+
+# Change this host
+## Host này thì vẫn để nguyên trạng
+DB_HOST=localhost
+
+DB_DIALECT=mysql
 NODE_ENV=development
 PORT=5000
 JWT_SECRET=0bac010eca699c25c8f62ba86e319c2305beb94641b859c32518cb854addb5f4
-# Thay Username của user đã thiết lập từ trước.
-DB_USER=admin
-DB_NAME=fcjresbar
-# Thay Password của user đã thiết lập từ trước.
-DB_PASSWORD=yourpassword
-DB_HOST=localhost
-DB_DIALECT=mysql
 ```
 
-Mở **Terminal** ở trong thư mục này và tiến hành cài đặt các NPM Packages
+- Sau đó là mở **Terminal** lên ở trong thư mục này
+- Tiến hành cài đặt các NPM Packages để chạy server
 
 ```bash
 npm install
 ```
 
-**INSERT IMAGE HERE**
+![2.2.7](/images/2-deploy-local/2.2.7.png)
 
 Sau đó là khởi chạy server
 
@@ -81,19 +94,22 @@ Sau đó là khởi chạy server
 npm run dev
 ```
 
-**INSERT IMAGE HERE**
+![2.2.8](/images/2-deploy-local/2.2.8.png)
 
 Và Web Server đã chạy thành công.
 
 #### Triển khai Client Application
 
-Tiếp theo, mình sẽ triển khai ứng dụng người dùng cuối, vào trong thư mục `frontend`, mở **Terminal** và cài đặt các NPM Packages.
+Tiếp theo, mình sẽ triển khai ứng dụng người dùng cuối
+
+- Vào trong thư mục `frontend`.
+- Mở **Terminal** và cài đặt các NPM Packages.
 
 ```bash
 npm install
 ```
 
-**INSERT IMAGE HERE**
+![2.2.9](/images/2-deploy-local/2.2.9.png)
 
 Trước khi khởi chạy ứng dụng thì mình sẽ cần phải thay đổi lại nội dung trong file `vite.config.js` như đoạn cấu hình mẫu ở bên dưới
 
@@ -129,7 +145,9 @@ Khởi chạy ứng dụng
 npm run dev
 ```
 
-**INSERT IMAGE HERE**
+![2.2.10](/images/2-deploy-local/2.2.10.png)
+
+Sau phần này thì chúng ta sẽ đi kiểm tra kết quả triển khai.
 
 #### Kết luận
 

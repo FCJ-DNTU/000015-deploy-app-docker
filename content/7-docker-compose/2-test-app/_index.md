@@ -12,10 +12,9 @@ Access the IP address of the **EC2** instance we created in the previous section
 
 ![Image](/images/7-docker-compose/2-test-app/7.6.png?featherlight=false&width=90pc)
 
-Here we can see the homepage of the application. Proceed to enter the login information.
+Here we can see the homepage of the application as same result with previous deployment. Proceed to enter the login information.
 
 ![Image](/images/7-docker-compose/2-test-app/7.7.png?featherlight=false&width=90pc)
-
 
 {{% notice note%}}
 If the login information is correct, it means the application has been successfully deployed with RDS.

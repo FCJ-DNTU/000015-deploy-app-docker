@@ -12,7 +12,7 @@ pre = "<b>2. </b>"
 
 Trong phần này thì chúng ta sẽ tiến hành triển khai một ứng dụng mẫu ở trên chính máy vi tính cá nhân để quan sát và đánh giá.
 
-**INSERT IMAGE HERE**
+![local_architect](/images/2-deploy-local/local_architect.png)
 
 #### Nội Dung
 

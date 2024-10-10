@@ -6,11 +6,16 @@ chapter = false
 pre = "<b>2. </b>"
 +++
 
-For increased security, we recommend that you configure multi-factor authentication (MFA) to help protect your AWS resources.
+To understand why we should deploy applications on Docker containers using Docker as the foundation, instead of using the personal computer's platform as the base.
 
-You can enable **one** MFA device (of any kind) per root user or IAM user. 
+For the end-user's application to work (such as adding or editing information), we need one or more servers to handle user requests. In this case, one or more servers will use the resources of the host machine.
 
-In this guide, we will go through 3 MFA options:
+In this section, we will deploy a sample application on a personal computer to observe and evaluate.
+
+![local_architect](/images/2-deploy-local/local_architect.png)
+
+#### Content
+
 1. [Install Dependencies](1-install-dependencies)
 2. [Deploy Application](2-deploy-application)
 3. [Test Application](3-test-app)

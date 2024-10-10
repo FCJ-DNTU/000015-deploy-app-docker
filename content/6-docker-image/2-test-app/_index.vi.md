@@ -15,21 +15,21 @@ http://public-dns-of-your-ec2:3000
 ```
 
 {{% notice note%}}
-NginX hoạt động ở Port 3000, khi mà chúng ta request tới URL trên, thì NginX sẽ xử lý và chuyển tiếp yêu cầu của chúng ta tới FrontEnd Application. Khi đó thì nội dung của Web site sẽ được tải về.
+NginX hoạt động ở Port **80** trong container, khi mà chúng ta request tới URL trên, thì container sẽ đổi từ port **3000** -> **80**, NginX sẽ xử lý và chuyển tiếp yêu cầu của chúng ta tới FrontEnd Application và nội dung của Website sẽ được tải về.
 {{% /notice%}}
 
-**INSERT IMAGE HERE**
+![6.2.1](/images/6-docker-image/6.2.1.png)
 
 Thử đăng nhập với User, nếu như đăng nhập thành công thì có nghĩa là ứng dụng của chúng ta đã hoạt động bình thường và chuyển chúng ta về giao diện chính.
 
-**INSERT IMAGE HERE**
+![6.2.2](/images/6-docker-image/6.2.2.png)
 
-**INSERT IMAGE HERE**
+![6.2.3](/images/6-docker-image/6.2.3.png)
 
 Mở thêm một số trang khác
 
-**INSERT IMAGE HERE**
+![6.2.4](/images/6-docker-image/6.2.4.png)
 
-**INSERT IMAGE HERE**
+![6.2.5](/images/6-docker-image/6.2.5.png)
 
-Như vậy thì chúng ta đã triển khai ứng dụng thành công với Docker Image. Sang phần sau thì chúng ta sẽ dùng một giải pháp khác để triển khai ứng dụng với Docker Compose.
+Như vậy thì chúng ta đã triển khai ứng dụng thành công với Docker Image. Sang phần sau thì chúng ta sẽ dùng một giải pháp khác để triển khai ứng dụng với Docker Compose, với giải pháp này thì việc triển khai, quản lý các containers sẽ dễ hơn.

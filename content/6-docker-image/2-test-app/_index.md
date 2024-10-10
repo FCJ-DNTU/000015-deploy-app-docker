@@ -6,27 +6,22 @@ chapter = false
 pre = "<b>6.2. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+{{% notice note %}}
+Nginx is running on Port **80** in the container. When we request the above URL, the container will route the request from port **3000** to **80**. Nginx will process and forward the request to the FrontEnd Application, and the website content will load.
+{{% /notice %}}
 
-#### Activate virtual MFA devices via Console
+![6.2.1](/images/6-docker-image/6.2.1.png)
 
-To set up and activate virtual MFA devices:
+Try logging in with a User account. If successful, it means our application is working correctly, and you will be redirected to the main interface.
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+![6.2.2](/images/6-docker-image/6.2.2.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+![6.2.3](/images/6-docker-image/6.2.3.png)
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+Browse through other pages:
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![6.2.4](/images/6-docker-image/6.2.4.png)
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+![6.2.5](/images/6-docker-image/6.2.5.png)
+
+Thus, we have successfully deployed the application using Docker Image. In the next section, we will use another solution to deploy the application with Docker Compose. With this solution, managing containers will be easier.

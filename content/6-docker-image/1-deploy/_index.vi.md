@@ -27,13 +27,17 @@ Và ở bước **4 Configure RDS** trước đó thì chúng ta đã cấu hìn
 - Chọn RDS Instance mà mình mới tạo.
 - Sao chép lại Endpoint.
 
-**INSERT IAMGE HERE**
+![6.1.1](/images/6-docker-image/6.1.1.png)
 
-Vào trong thư mục mã nguồn mà chúng ta đã clone từ trước đó `aws-fcj-container-app`, trong thư mục `backend`, chúng ta sẽ sửa lại nội dung của `.env`
+Thư mục mã nguồn
 
-**INSERT IAMGE HERE**
+![6.1.2](/images/6-docker-image/6.1.2.png)
 
-**INSERT IAMGE HERE**
+Vào trong thư mục mã nguồn mà chúng ta đã clone từ trước đó `aws-fcj-container-app`, trong thư mục `backend`, chúng ta sẽ sửa lại nội dung của `.env`, cụ thể là thay đổi biến `DB_HOST`
+
+![6.1.3](/images/6-docker-image/6.1.3.png)
+
+![6.1.4](/images/6-docker-image/6.1.4.png)
 
 Giờ thì web server của chúng ta cũng đã sẵn sàng để chạy, tiếp theo là chạy lệnh ở bên dưới
 
@@ -41,9 +45,9 @@ Giờ thì web server của chúng ta cũng đã sẵn sàng để chạy, tiế
 docker build . -t backend-image
 ```
 
-**INSERT IAMGE HERE**
+![6.1.5](/images/6-docker-image/6.1.5.png)
 
-Trước khi bắt đầu khởi tạo, thì mình sẽ cần phải tạo một network cho các container trong môi trường giao tiếp với nhau
+Trước khi bắt đầu chạy Container cho web server, thì mình sẽ cần phải tạo một **network** cho các container trong môi trường giao tiếp với nhau
 
 ```bash
 docker network create my-network
@@ -55,13 +59,13 @@ Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới
 docker run -p 5000:5000 --network my-network --name backend backend-image
 ```
 
-**INSERT IAMGE HERE**
+![6.1.7](/images/6-docker-image/6.1.7.png)
 
 #### Triển khai Application
 
-Giờ chúng ta sẽ phải mở một SSH Session mới để thực hiện tương tự như các bước ở trên, giờ thì chúng ta sẽ triển khai Application
+Giờ chúng ta sẽ phải mở một SSH Session mới để thực hiện tương tự như các bước ở trên, nhưng sẽ là triển khai Application
 
-**INSERT IAMGE HERE**
+![6.1.8](/images/6-docker-image/6.1.8.png)
 
 - `cd` vào trong thư mục `frontend`
 - Chạy lệnh như bên dưới
@@ -70,7 +74,7 @@ Giờ chúng ta sẽ phải mở một SSH Session mới để thực hiện tư
 docker build . -t frontend-image
 ```
 
-**INSERT IAMGE HERE**
+![6.1.9](/images/6-docker-image/6.1.9.png)
 
 Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới tạo
 
@@ -78,19 +82,21 @@ Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới
 docker run --network my-network --name frontend frontend-image
 ```
 
-**INSERT IAMGE HERE**
+![6.1.10](/images/6-docker-image/6.1.10.png)
 
 #### Triển khai Nginx Server
 
-Mở một Session khác, trước khi khởi tạo NginX Server, thì kiểm tra xem các container trước đó của chúng ta
+Mở một Session khác, trước khi khởi tạo NginX Server, thì kiểm tra xem các container trước đó vẫn còn chạy hay không
 
 ```bash
 docker ps
 ```
 
-**INSERT IAMGE HERE**
+![6.1.11](/images/6-docker-image/6.1.11.png)
 
-Để cho hệ thống hoạt động trơn tru, thì chúng t sẽ thêm một bước nữa là triển khai thêm Nginx Server. Đóng vai trò là một Proxy Server. Tiến hành khởi động Nginx Server
+Ok, vậy là vẫn chạy như bình thường.
+
+Và để cho hệ thống hoạt động trơn tru, thì chúng t sẽ thêm một bước nữa là triển khai thêm Nginx Server. Đóng vai trò là một Proxy Server. Tiến hành khởi động Nginx Server
 
 - `cd` vào trong `nginx`
 - Chạy lệnh như bên dưới
@@ -99,7 +105,7 @@ docker ps
 docker build . -t nginx-image
 ```
 
-**INSERT IAMGE HERE**
+![6.1.12](/images/6-docker-image/6.1.12.png)
 
 Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới tạo
 
@@ -107,4 +113,6 @@ Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới
 docker run -p 3000:80 --network my-network --name nginx nginx-image
 ```
 
-**INSERT IAMGE HERE**
+![6.1.13](/images/6-docker-image/6.1.13.png)
+
+Như vậy thì ứng dụng đã sẵn sàng để thử.
