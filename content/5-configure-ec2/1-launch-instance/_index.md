@@ -84,3 +84,19 @@ docker-compose -v
 ```
 
 ![5.1.11](/images/5-configure-ec2/5.1.11.png)
+
+#### Attach ECR Role to EC2
+
+In the EC2 instance management interface:
+
+- Select EC2 **FCJ-Lab-vpc**
+- Choose **Action**
+- Select **Security**
+- Click on **Modify IAM role**
+
+![5.1.12](/images/5-configure-ec2/5.1.12.png)
+
+- Select the Role **CustomeRWECRRole**
+- Click on **Update IAM role**
+
+![5.1.13](/images/5-configure-ec2/5.1.13.png)

@@ -6,7 +6,7 @@ chapter = false
 pre = "<b>5. </b>"
 +++
 
-#### Creating
+### Cấu hình EC2 Instance
 
 Ở phần này chúng ta sẽ thực hiện tạo một máy chủ EC2, cài đặt các thư viện và thêm dữ liệu vào database đã tạo trước đó. an Admininistrator Group
 
