@@ -6,9 +6,11 @@ chapter = false
 pre = "<b>3. </b>"
 +++
 
-#### Creating an Admininistrator Group
+### Preparation
 
-1. [Create VPC](1-create-vpc)
-2. [Create Security Group](2-create-sg)
-3. [Create IAM Role to access to ECR](3-create-role)
-4. [Login to Docker Hub](4-docker-hub)
+In this section, we will configure the VPC, Security Group for EC2 and RDS database instance, crate role for ECR.
+
+1. [Configure VPC](1-create-vpc/)
+2. [Create Security Group](2-create-sg/)
+3. [Configure Role for ECR](3-create-role/)
+4. [Log in to Docker Hub](4-login-docker-hub/)

@@ -1,32 +1,86 @@
 +++
-title = "Khởi chạy EC2 Instance"
+title = "Cấu hình EC2 Instance"
 date = 2024
 weight = 1
 chapter = false
 pre = "<b>5.1. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Cấu hình cho EC2 Instance
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Ở giao diện AWS Console
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+- Tìm kiếm và chọn **EC2**
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+![5.1.1](/images/5-configure-ec2/5.1.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+Ở giao diện quản lý EC2
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+- Chọn **Instance**
+- Chọn **Launch Instances**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![5.1.2](/images/5-configure-ec2/5.1.2.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+- Name `FCJ-Lab-my-server`
+
+![5.1.3](/images/5-configure-ec2/5.1.3.png)
+
+- Chọn hệ điều hành **Ubuntu**
+- Amazon Machine Image (AMI) **Ubuntu Server 24.04**
+
+![5.1.4](/images/5-configure-ec2/5.1.4.png)
+
+- Instance type **t3.medium**
+- Chọn **Create new key pair**
+
+![5.1.5](/images/5-configure-ec2/5.1.5.png)
+
+- Key pair name `FCJ-Lab-key`
+- Chọn **Create key pair**
+
+![5.1.6](/images/5-configure-ec2/5.1.6.png)
+
+Kéo xuống dưới phần cấu hình security
+
+- VPC **FCJ-Lab-vpc**
+- Chọn **subnet public**
+- Auto-assign public IP **Enable**
+- Chọn **Select existing security group**
+- Chọn **FCJ-Lab-SG**
+
+![5.1.7](/images/5-configure-ec2/5.1.7.png)
+
+- Chọn **Launch Template**
+
+![5.1.8](/images/5-configure-ec2/5.1.8.png)
+
+#### Cài đặt thư viện và ứng dụng vào EC2
+
+Ở bước này, chúng ta cần thực hiện SSH tới EC2 qua Command Line hoặc, Visual Studio Code CLI, hoặc công cụ bất kỳ.
+
+- Clone repository github
+
+```bash
+https://github.com/AWS-First-Cloud-Journey/aws-fcj-container-app.git
+```
+
+![5.1.10](/images/5-configure-ec2/5.1.10.png)
+
+- Cài đặt Docker compose
+
+```bash
+#!/bin/bash
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update -y
+sudo apt install docker-ce -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker -v
+docker-compose -v
+```
+
+![5.1.11](/images/5-configure-ec2/5.1.11.png)

@@ -1,32 +1,68 @@
 +++
-title = "Tạo Security Group"
+title = "Cấu hình Security Group"
 date = 2024
 weight = 2
 chapter = false
 pre = "<b>3.2. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Cấu hình Security Group cho EC2
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Ở giao diện quản lý EC2, mục lựa chọn bên trái.
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+- Chọn **Security Groups**
+- Chọn **Create security group**
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+![3.2.1](/images/3-preparation/3.2.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+Cấu hình cho Security Group
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+- Ở phần Basic details
+  - Security group name `FCJ-Lab-sg-public`
+  - Description `Security group for FCJ Lab`
+  - VPC **FCJ-Lab-vpc**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![3.2.2](/images/3-preparation/3.2.2.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+- Ở phần Inbound rules chúng ta sẽ thêm những rule như sau:
+  - Type **SSH** source **Anywhere-IPv4**
+  - Type **HTTP** source **Anywhere-IPv4**
+  - Type **HTTPS** source **Anywhere-IPv4**
+  - Type **Custom TCP**, port range **3000**, source **Anywhere-IPv4**
+
+![3.2.3](/images/3-preparation/3.2.3.png)
+
+- Ở phần Outbound chúng ta sẽ để mặc định
+- Nhấn **Create security group**
+
+#### Cấu hình Security Group cho database instance
+
+Tưởng tự như bước tạo security group cho EC2
+
+- Chọn **Security Groups**
+- Chọn **Create security group**
+
+![3.2.1](/images/3-preparation/3.2.1.png)
+
+Cấu hình cho Security Group
+
+- Ở phần Basic details
+  - Security group name `FCJ-Lab-sg-db`
+  - Description `Security group for RDS database instance`
+  - VPC **FCJ-Lab-vpc**
+
+![3.2.5](/images/3-preparation/3.2.5.png)
+
+- Ở phần Inbound
+  - Chọn Type **MYSQL/Aurora**
+  - Source chọn **FCJ-Lab-sg**
+
+![3.2.6](/images/3-preparation/3.2.6.png)
+
+- Ở phần Outbound
+
+  - Chúng ta để mặc định
+
+- Chọn **Create security group**
+
+![3.2.7](/images/3-preparation/3.2.7.png)

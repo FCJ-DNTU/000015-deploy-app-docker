@@ -1,32 +1,127 @@
 +++
-title = "Tạo vai trò IAM để truy cập vào ECR"
+title = "Tạo IAM Roles để truy cập vào ECR"
 date = 2024
 weight = 3
 chapter = false
 pre = "<b>3.3. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+#### Cấu hình Policy
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Ở giao diện AWS Console
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+- Chọn tìm và chọn `IAM`
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+![3.3.1](/images/3-preparation/3.3.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+Ở mục chọn ở bên phải
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+- Chọn **Policy**
+- Chọn **Create Policy**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![3.3.2](/images/3-preparation/3.3.2.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+Ở phần Policy Editor
+
+- Tìm kiếm và chọn **Elastic Container Registry**
+- Chọn **Next**
+
+![3.3.3](/images/3-preparation/3.3.3.png)
+
+Xuất hiện bảng chọn các rule
+
+- Ở phần **List**
+  - Chọn **DescribeImage**
+  - ListImages
+- Ở phần **Read**
+  - Chọn **BatchGetImage**
+  - Chọn **DescribeRegister**
+  - Chọn **DescribeRepositories**
+  - Chọn **GetAccountSetting**
+  - Chọn **GetAuthorizationToken**
+
+![3.3.4](/images/3-preparation/3.3.4.png)
+
+- Ở phần **Resources**
+  - Chọn **Specific**
+  - Chọn **Any in this account**
+  - Chọn **Next**
+
+![3.3.5](/images/3-preparation/3.3.5.png)
+
+- Ở phần Policy detail
+  - Policy name `ReadECRRepositoryContent`
+  - Description `Allow pull images, describe repositories`
+
+![3.3.6](/images/3-preparation/3.3.6.png)
+
+- Chọn **Create policy**
+
+![3.3.7](/images/3-preparation/3.3.7.png)
+
+Tương tự chúng ta tạo thêm một policy dành cho write ECR
+
+- Chọn **Create Policy**
+
+Xuất hiện bảng chọn các rule
+
+- Ở phần **Read**
+  - Chọn **BatchCheckLayerAvailability**
+  - Chọn **GetAuthorizationToken**
+- Ở phần **Write**
+  - Chọn **Chọn CompleteLayerUpload**
+  - Chọn **InitialLayerUpload**
+  - Chọn **PutImage**
+  - Chọn **UploadLayerPart**
+
+![3.3.8](/images/3-preparation/3.3.8.png)
+
+- Ở phần **Resources**
+  - Chọn **Any in this account**
+  - Chọn **Next**
+
+![3.3.9](/images/3-preparation/3.3.9.png)
+
+Xuất hiện bảng Policy detail
+
+- Policy name **WriteECRRepositoryContent**
+- Description **Allow push and delete images**
+
+![3.3.10](/images/3-preparation/3.3.10.png)
+
+- Chọn **Create policy**
+
+![3.3.11](/images/3-preparation/3.3.11.png)
+
+#### Tạo Role cho ECR
+
+Ở giao diện quản lý EC2
+
+- Chọn **Roles**
+- Chọn **Create role**
+
+![3.3.12](/images/3-preparation/3.3.12.png)
+
+- Chọn **AWS service**
+- Chọn **EC2**
+
+![3.3.13](/images/3-preparation/3.3.13.png)
+
+- Chọn **Next**
+
+![3.3.14](/images/3-preparation/3.3.14.png)
+
+- Filter by Type **Customer managed**
+- Chọn 2 policy mà chúng ta vừa tạo
+- Chọn **Next**
+
+![3.3.15](/images/3-preparation/3.3.15.png)
+
+- Role name **CustomRWECRRole**
+- Description **Custom Read and Write role ECS**
+
+![3.3.16](/images/3-preparation/3.3.16.png)
+
+- Chọn **Create role**
+
+![3.3.17](/images/3-preparation/3.3.17.png)

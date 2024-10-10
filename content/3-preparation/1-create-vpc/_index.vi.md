@@ -1,32 +1,87 @@
 +++
-title = "Tạo VPC"
+title = "Cấu hình VPC"
 date = 2024
 weight = 1
 chapter = false
 pre = "<b>3.1. </b>"
 +++
 
-{{% notice note %}}
-Để kích hoạt MFA, bạn cần đăng nhập vào AWS sử dụng root user. 
-{{% /notice %}}
+### Cấu hình VPC
 
-#### Kích hoạt thiết bị MFA ảo thông qua Console
+Ở giao diện AWS console thực hiện
 
-Để thiết lập và kích hoạt thiết bị MFA ảo:
+- Tìm kiếm và chọn VPC
 
-1. Đăng nhập vào AWS Console.
-2. Góc trên bên phải, bạn sẽ thấy tên account của bạn, chọn vào và chọn **My Security Credentials**.
+![3.1.1](/images/3-preparation/3.1.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+Ở giao diện quản lý **VPC**
 
-3. Mở rộng **Multi-factor authentication (MFA)** và chọn **Active MFA**.
+- Chọn **Your VPC**
+- Chọn **Create VPC**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![3.1.2](/images/3-preparation/3.1.2.png)
 
-4. Trong Manage MFA Device, chọn **Virtual MFA device** sau đó chọn **Continue**.
-5. Cài đặt ứng dụng tương thích trên điện thoại của bạn. [Danh sách ứng dụng MFA](https://aws.amazon.com/iam/features/mfa/?audit=2019q1).
-6. Sau khi cài đặt ứng dụng, chọn **Show QR Code** và dùng điện thoại đang mở ứng dụng MFA của bạn để scan mã QR.
-    - ***Ví dụ:** Bạn đang sử dụng *Microsoft Authenticator*.
-![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-7. Ở ô **MFA code 1**, nhập 6 kí tự số trong app, đợi 30 giây sau đó nhập tiếp 6 kí tự số vào ô **MFA Code 2** và chọn **Assign MFA**.
-8. Bây giờ bạn đã hoàn thành kích hoạt **thiết bị MFA ảo**.
+Xuất hiện bảng cấu hình cho VPC
+
+- Chọn **VPC and more**
+- Đặt tên `FCJ-Lab`
+
+![3.1.3](/images/3-preparation/3.1.3.png)
+
+Ở phần VPC endpoint
+
+- Chọn **None**
+- Chọn **Create VPC**
+
+![3.1.4](/images/3-preparation/3.1.4.png)
+
+Sau khi tạo xong VPC, chúng ta tiến hành kiểm tra thông tin VPC vừa tạo.
+
+- Chọn **FCJ-Lab-vpc**
+
+![3.1.5](/images/3-preparation/3.1.5.png)
+
+Xem tổng quan cấu hình của VPC
+
+![3.1.6](/images/3-preparation/3.1.6.png)
+
+### Cấu hình Public Subnet
+
+Ở giao diện quản lý VPC, ở mục chọn ở bên trái kéo xuống dưới
+
+- Chọn **Subnet**
+- Tìm kiếm **FCJ-Lab**
+
+![3.1.7](/images/3-preparation/3.1.7.png)
+
+Chúng ta sẽ thấy có 2 FCJ-Lab-subnet-public-1a, FCJ-Lab-subnet-public-1b
+
+Đầu tiên chúng ta sẽ setting cho FCJ-Lab-subnet-public-1a
+
+- Chọn **FCJ-lab-subnet-public-1a**
+- Chọn **Action**
+- Chọn **Edit subnet settings**
+
+![3.1.8](/images/3-preparation/3.1.8.png)
+
+Xuất hiện bảng cấu hình cho public subnet
+
+- Click chọn **Enable auto-assign public IPv4 address**
+- Chọn **Save**
+
+![3.1.9](/images/3-preparation/3.1.9.png)
+
+Tương tự, chúng ta sẽ setting cho FCJ-Lab-subnet-public-1b
+
+- Chọn **FCJ-Lab-subnet-public-1b**
+- Chọn **Action**
+- Chọn **Edit subnet settings**
+
+![3.1.10](/images/3-preparation/3.1.10.png)
+
+- Click chọn **Enable auto-assign public IPv4 address**
+- Chọn **Save**
+
+![3.1.11](/images/3-preparation/3.1.11.png)
+
+Như vậy, chúng ta vừa cấu hình xong VPC và enable public IPv4 cho subnet public.

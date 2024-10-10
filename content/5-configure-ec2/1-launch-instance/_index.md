@@ -1,32 +1,86 @@
 +++
-title = "Launch EC2 Instance"
+title = "EC2 Instance Configuration"
 date = 2024
 weight = 1
 chapter = false
 pre = "<b>5.1. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
-{{% /notice%}}
+#### Configuring the EC2 Instance
 
-#### Activate virtual MFA devices via Console
+In the AWS Console:
 
-To set up and activate virtual MFA devices:
+- Search for and select **EC2**
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+![5.1.1](/images/5-configure-ec2/5.1.1.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+In the EC2 management interface:
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+- Select **Instances**
+- Click on **Launch Instances**
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+![5.1.2](/images/5-configure-ec2/5.1.2.png)
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+- Name it `FCJ-Lab-my-server`
+
+![5.1.3](/images/5-configure-ec2/5.1.3.png)
+
+- Choose the operating system **Ubuntu**
+- Amazon Machine Image (AMI) **Ubuntu Server 24.04**
+
+![5.1.4](/images/5-configure-ec2/5.1.4.png)
+
+- Instance type **t3.medium**
+- Select **Create new key pair**
+
+![5.1.5](/images/5-configure-ec2/5.1.5.png)
+
+- Key pair name `FCJ-Lab-key`
+- Select **Create key pair**
+
+![5.1.6](/images/5-configure-ec2/5.1.6.png)
+
+Scroll down to the security configuration section:
+
+- VPC **FCJ-Lab-vpc**
+- Choose **public subnet**
+- Auto-assign public IP **Enable**
+- Select **Select existing security group**
+- Choose **FCJ-Lab-SG**
+
+![5.1.7](/images/5-configure-ec2/5.1.7.png)
+
+- Select **Launch Template**
+
+![5.1.8](/images/5-configure-ec2/5.1.8.png)
+
+#### Install Libraries and Application on EC2
+
+In this step, we need to SSH into the EC2 instance using the Command Line, Visual Studio Code CLI, or any other tool of your choice.
+
+- Clone the GitHub repository
+
+```bash
+https://github.com/AWS-First-Cloud-Journey/aws-fcj-container-app.git
+```
+
+![5.1.10](/images/5-configure-ec2/5.1.10.png)
+
+- Install Docker compose
+
+```bash
+#!/bin/bash
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update -y
+sudo apt install docker-ce -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker -v
+docker-compose -v
+```
+
+![5.1.11](/images/5-configure-ec2/5.1.11.png)
