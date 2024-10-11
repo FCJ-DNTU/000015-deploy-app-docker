@@ -6,27 +6,52 @@ chapter = false
 pre = "<b>4.2. </b>"
 +++
 
-{{% notice note%}}
-To enable MFA, you need to log in to AWS using the root user. 
+#### Create RDS Instance
+
+- Go to the section: **Databases**
+- Select: **Create Database**
+
+![RDS](/images/4-rds/4.2.1.png)
+
+- Choose the method: **Standard create**
+- Select the database type: **MySQL**
+
+![RDS](/images/4-rds/4.2.2.png)
+
+- Select the template: **Dev/Test**
+- Choose **Multi-AZ DB instance**
+
+{{% notice tip%}}
+This section can be adjusted according to your needs to optimize costs, but there are some limitations, so it's important to research carefully.
 {{% /notice%}}
 
-#### Activate virtual MFA devices via Console
+![RDS](/images/4-rds/4.2.3.png)
 
-To set up and activate virtual MFA devices:
+- Enter the DB instance name: **`fcj-lab-rds-instance`**
+- Enter the  username: **`admin`**
+- Enter the password: **`letmein12345`**
 
-1. Sign-in to the AWS Console.
-2. In the upper right corner, you will see your account name. Click the drop-down and select **My Security Credentials**.
+![RDS](/images/4-rds/4.2.4.png)
 
-![Virtual MFA Device](/images/1-account-setup/MySecurity_v1.png?width=15pc)
+- Adjust configurations as needed
 
-3. Expand **Multi-factor authentication (MFA)** and select **Active MFA**.
+![RDS](/images/4-rds/4.2.5.png)
 
-![MFA Section](/images/1-account-setup/MFA.png?width=90pc)
+- Connect to the previously created **VPC**
+- Select the **Subnet** created in the previous section
 
-4. In Manage MFA Device, select **Virtual MFA device** then select **Continue**.
-5. Install a [compatible Authenticator application](https://aws.amazon.com/iam/features/mfa/#Virtual_MFA_Applications) on your phone.
-6. After installing the app, select **Show QR Code** and use your Authenticator application to scan the QR code.
-   - Sample MFA registration with _Microsoft Authenticator_:
-      ![MFA QR Scanner](/images/1-account-setup/MFAScannerQR.png?width=90pc)
-1. In the **MFA code 1** box, enter 6 numeric characters from the app. Wait 30 seconds or until the next refresh, then enter the next 6 characters into the **MFA Code 2** box and select **Assign MFA**.
-2. You have now completed activating your **virtual MFA device**!
+![RDS](/images/4-rds/4.2.6.png)
+
+- Choose the **Security group** created for the DB
+- The following sections can be left as default or configured based on your preferences
+
+![RDS](/images/4-rds/4.2.7.png)
+
+- Review all configurations carefully and click **Create**
+
+![RDS](/images/4-rds/4.2.8.png)
+
+- Complete the creation of the **DB instance**, it will take about 15 minutes to become **Available**
+
+![RDS](/images/4-rds/4.2.9.png)
+
