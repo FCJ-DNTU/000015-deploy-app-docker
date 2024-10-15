@@ -6,115 +6,128 @@ chapter = false
 pre = "<b>8.1. </b>"
 +++
 
-#### Tạo ECR repository
+#### Tạo ECR Repository cho Frontend Image
 
 - Tìm kiếm **Amazon Elastic Container Registry**
 - Chọn **Create**
 
-![RDS](/images/8-push-image/8.1.1.png)
+![8.1.1.png](/images/8-push-image/8.1.1.png)
 
-- Nhập tên: **`fcj-lab-ecr`**
-- Chọn cấu hình cho phù hợp
+Chúng ta sẽ tạo 2 repositories khác nhau để chứa các Docker Image. Đầu tiên là tạo repository để lưu image cho frontend app.
 
-![RDS](/images/8-push-image/8.1.2.png)
+- Repository name: `fcjresbar-fe`.
+- Image tag mutability: chọn **Mutable**.
+- Encryption configuration: để mặc định.
 
-- Phần mã hóa để mặc định hoặc chọn cấu hình cho phù hợp
-- Chọn để bật **Scan on push**
-- Chọn **Create**
+![8.1.2.png](/images/8-push-image/8.1.2.png)
 
-![RDS](/images/8-push-image/8.1.3.png)
+- Ấn **Create** để tạo
 
-- Hoàn tất tạo một repository trong ECR
+![8.1.3.png](/images/8-push-image/8.1.3.png)
 
-![RDS](/images/8-push-image/8.1.4.png)
+![8.1.4.png](/images/8-push-image/8.1.4.png)
 
-- Truy cập vào tên repository đó, chọn **View push commands** để xem cách push images
+#### Tạo ECR Repository cho Backend Image
 
-![RDS](/images/8-push-image/8.1.5.png)
+Tương tự, giờ thì chúng ta sẽ tạo cho Backend Image
 
-#### Vào lại EC2 instance đã được ssh sẵn
+![8.1.5.png](/images/8-push-image/8.1.5.png)
 
-- Tải **AWS CLI** bằng các lệnh sau
-```
-sudo apt -y update
-sudo apt -y install unzip curl
-sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-```
+Với các thông tin:
 
-![RDS](/images/8-push-image/8.1.6.png)
+- Repository name: `fcjresbar-be`.
+- Image tag mutability: chọn **Mutable**.
+- Encryption configuration: để mặc định.
 
-![RDS](/images/8-push-image/8.1.7.png)
+![8.1.6.png](/images/8-push-image/8.1.6.png)
 
-- Giải nén và kiểm tra
-```
-sudo unzip awscliv2.zip
+- Ấn **Create** để tạo
+
+![8.1.7.png](/images/8-push-image/8.1.7.png)
+
+![8.1.8.png](/images/8-push-image/8.1.8.png)
+
+{{% notice note %}}
+Chúng ta cần phải tạo mỗi một repository cho mỗi một ứng dụng khác nhau để quản lý version của các Docker image dễ dàng hơn, đặc biệt là dùng để thực hiện CI/CD sau này.
+{{% /notice %}}
+
+#### Cài AWS CLI
+
+Theo mặc định (15/10/2024) thì AWS CLI không được cài đặt mặc định ở trong Ubuntu.
+
+![8.1.9.png](/images/8-push-image/8.1.9.png)
+
+Trước tiên thì chúng ta cần phải tải **unzip** trước.
+
+![8.1.10.png](/images/8-push-image/8.1.10.png)
+
+Sau đó thì chúng ta sẽ dùng các câu lệnh ở bên dưới để có thể cài đặt được AWS CLI.
+
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
 sudo ./aws/install
-aws --version
 ```
 
-![RDS](/images/8-push-image/8.1.8.png)
+![8.1.11.png](/images/8-push-image/8.1.11.png)
 
-![RDS](/images/8-push-image/8.1.9.png)
+![8.1.12.png](/images/8-push-image/8.1.12.png)
 
-- Đăng nhập vào **ECR** bằng lệnh mẫu sau
-```
-aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin <Account_ID>.dkr.ecr.ap-southeast-1.amazonaws.com
-```
-{{% notice note%}}
-Nếu như bị lỗi phần này thì mình khuyến nghị bạn nên kiểm tra lại xem EC2 instance của bạn đã được cấp quyền truy cập ECR chưa nếu chưa cần phải cấp cho nó hoặc là dùng **aws config** để đăng nhập bằng credentials của AWS.
-{{% /notice%}}
+#### Push Frontend Image lên ECR
 
-![RDS](/images/8-push-image/8.1.10.png)
+Vào lại ECR Console
 
-- Build các image nginx đầu tiên 
-```
-ls
-cd nginx/
-sudo docker build -t fcj-nginx .
-```
+- Chọn `fcjresbar-fe`
+- Ấn **View push commands**
 
-![RDS](/images/8-push-image/8.1.11.png)
+![8.1.13.png](/images/8-push-image/8.1.13.png)
 
-- Build các image frontend 
-```
-cd ...
-cd frontend/
-sudo docker build -t fcj-frontend .
-```
+Khi đó một hộp thoại sẽ nhảy lên và chúng ta có thể thấy được một chuỗi các câu lệnh.
 
-![RDS](/images/8-push-image/8.1.12.png)
+![8.1.14.png](/images/8-push-image/8.1.14.png)
 
-- Build các image backend 
-```
-cd ...
-cd backend/
-sudo docker build -t fcj-backend .
-```
+Trở lại với EC2 Instance, chúng ta cần phải dùng Root User để có thể đăng nhập vào trong ECR với Docker.
 
-![RDS](/images/8-push-image/8.1.13.png)
+![8.1.15.png](/images/8-push-image/8.1.15.png)
 
-- Kiểm tra các images được build thành công
-- Gắn tag cho từng images để có thể push lên ECR 
-```
-sudo docker images
-sudo docker tag <image>:<tag> <Account_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/<Repository_Name>:<Name_tag>
-sudo docker images
-```
+{{% notice note %}}
+Bởi vì khi mà người dùng sử dụng sudo để đăng nhập vào ECR với Docker, thì credential được lưu ở trong HOME Dir của người dùng đó. Nhưng khi thực hiện lệnh push hoặc pull, thì nó sẽ xem credential ở trong Root thay vì là ở trong HOME Dir đã được lưu khi đăng nhập trước đó.
+{{% /notice %}}
 
-![RDS](/images/8-push-image/8.1.14.png)
+Ở các phần trước đó thì chúng ta đã tạo ra các Images cho từng ứng dụng rồi, nên là giờ chỉ cần gắn tag lại cho phù hợp rồi đẩy lên trên các Registry tương ứng.
 
-- Push images lên **ECR repository**
-```
-sudo docker images
-sudo docker push <Account_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/<Repository_Name>:<Name_tag>
-sudo docker images
-```
-{{% notice note%}}
-Nếu như bị lỗi phần này thì mình khuyên bạn nên chuyển qua sử dụng **root** để có thể tối ưu hóa quyền để push images lên ECR
-{{% /notice%}}
+![8.1.16.png](/images/8-push-image/8.1.16.png)
 
-![RDS](/images/8-push-image/8.1.15.png)
+{{% notice note %}}
+Format chung `<Account_ID>.dkr.ecr.<region>.amazonaws.com/<Repository_Name>:<Name_tag>`
+{{% /notice %}}
 
-- Kiểm tra images được push ở trên **ECR repository**
+Sau khi tạo xong thì tiến hành đẩy Image lên ECR
 
-![RDS](/images/8-push-image/8.1.16.png)
+![8.1.17.png](/images/8-push-image/8.1.17.png)
+
+#### Push Backend Image lên ECR
+
+Tương tự, chúng ta cũng sẽ view push command của `fcjresbar-be`, nhớ sao chép lại lệnh đăng nhập. Nhưng logout ra trước
+
+![8.1.18.png](/images/8-push-image/8.1.18.png)
+
+Đăng nhập lại bằng lệnh đăng nhập đã sao chép
+
+![8.1.19.png](/images/8-push-image/8.1.19.png)
+
+Tương tự, gắn tag phù hợp cho image
+
+![8.1.20.png](/images/8-push-image/8.1.20.png)
+
+Đẩy image lên ECR
+
+![8.1.21.png](/images/8-push-image/8.1.21.png)
+
+#### Kiểm tra kết quả
+
+Nếu như thành công, thì vào trong ECR Console, vào lần lượt từng repositories thì chúng ta có thể thấy được kết quả ở trong này.
+
+![8.1.22.png](/images/8-push-image/8.1.22.png)
+
+![8.1.23.png](/images/8-push-image/8.1.23.png)

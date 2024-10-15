@@ -54,37 +54,6 @@ Kéo xuống dưới phần cấu hình security
 
 ![5.1.8](/images/5-configure-ec2/5.1.8.png)
 
-#### Cài đặt thư viện và ứng dụng vào EC2
-
-Ở bước này, chúng ta cần thực hiện SSH tới EC2 qua Command Line hoặc, Visual Studio Code CLI, hoặc công cụ bất kỳ.
-
-- Clone repository github
-
-```bash
-https://github.com/AWS-First-Cloud-Journey/aws-fcj-container-app.git
-```
-
-![5.1.10](/images/5-configure-ec2/5.1.10.png)
-
-- Cài đặt Docker compose
-
-```bash
-#!/bin/bash
-sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt update -y
-sudo apt install docker-ce -y
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker -v
-docker-compose -v
-```
-
-![5.1.11](/images/5-configure-ec2/5.1.11.png)
-
 #### Gắn Role ECR cho EC2
 
 Ở giao diện quan lý EC2 instance

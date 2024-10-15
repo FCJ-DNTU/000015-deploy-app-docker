@@ -8,22 +8,16 @@ pre = "<b>7.2. </b>"
 
 #### Kiểm tra ứng dụng
 
-Truy cập vào địa chỉ IP của **EC2** mà chúng ta đã tạo ra ở phần trước và truy cập vào địa chỉ **http://[ip-address]:3000**.
+Tương tự như bước test trước, thì mình cũng sẽ vào lại trong DNS đó. Và bạn sẽ thấy được trang chủ của ứng dụng.
 
-![Image](/images/7-docker-compose/2-test-app/7.6.png?featherlight=false&width=90pc)
+![7.2.1.png](/images/7-docker-compose/7.2.1.png)
 
-Tại đây chúng ta thấy được trang chủ của ứng dụng giống như kết quả triển khai trước. Tiến hành nhập thông tin đăng nhập
+Giờ thì đăng nhập vào trong app dưới người dùng là Admin
 
-![Image](/images/7-docker-compose/2-test-app/7.7.png?featherlight=false&width=90pc)
+![7.2.2.png](/images/7-docker-compose/7.2.2.png)
 
-{{% notice note%}}
-Nếu thông tin đăng nhập đúng, điều đó có nghĩa là ứng dụng được triển khai với RDS thành công.
-{{% /notice%}}
+Sau đó chúng ta sẽ được chuyển hướng vào trang chính. Thử vào một số trang khác
 
-![Image](/images/7-docker-compose/2-test-app/7.8.png?featherlight=false&width=90pc)
+![7.2.3.png](/images/7-docker-compose/7.2.3.png)
 
-Một vài hình ảnh về ứng dụng.
-
-![Image](/images/7-docker-compose/2-test-app/7.9.png?featherlight=false&width=90pc)
-
-![Image](/images/7-docker-compose/2-test-app/7.10.png?featherlight=false&width=90pc)
+![7.2.4.png](/images/7-docker-compose/7.2.4.png)
