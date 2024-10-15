@@ -8,22 +8,16 @@ pre = "<b>7.2. </b>"
 
 #### Testing the application
 
-Access the IP address of the **EC2** instance we created in the previous section and navigate to **http://<ip-address>:3000**.
+Similar to the previous testing step, I will go back to the DNS. You should see the homepage of the application.
 
-![Image](/images/7-docker-compose/2-test-app/7.6.png?featherlight=false&width=90pc)
+![7.2.1.png](/images/7-docker-compose/7.2.1.png)
 
-Here we can see the homepage of the application as same result with previous deployment. Proceed to enter the login information.
+Now, log into the app as the user Admin.
 
-![Image](/images/7-docker-compose/2-test-app/7.7.png?featherlight=false&width=90pc)
+![7.2.2.png](/images/7-docker-compose/7.2.2.png)
 
-{{% notice note%}}
-If the login information is correct, it means the application has been successfully deployed with RDS.
-{{% /notice%}}
+After that, we will be redirected to the main page. Let's try accessing a few other pages.
 
-![Image](/images/7-docker-compose/2-test-app/7.8.png?featherlight=false&width=90pc)
+![7.2.3.png](/images/7-docker-compose/7.2.3.png)
 
-A few images of the application.
-
-![Image](/images/7-docker-compose/2-test-app/7.9.png?featherlight=false&width=90pc)
-
-![Image](/images/7-docker-compose/2-test-app/7.10.png?featherlight=false&width=90pc)
+![7.2.4.png](/images/7-docker-compose/7.2.4.png)

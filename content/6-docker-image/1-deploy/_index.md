@@ -6,113 +6,72 @@ chapter = false
 pre = "<b>6.1. </b>"
 +++
 
-In the previous **2 Deploy on Local** section, we manually deployed the following:
+In the previous section, **2 Deploy on Local**, we manually deployed the following:
 
 - Database Server
-- NginX Server
 - Web Server
 - End User Application
 
-There were many limitations, as mentioned earlier, so now we will deploy this infrastructure on the Cloud using Docker. This means we no longer need to worry about downloading and installing. If you are familiar with the basic concepts of Docker (especially networking), this part won't be too difficult.
+As mentioned before, there were several limitations in this approach. Now, we'll deploy the infrastructure on the cloud using Docker, eliminating the need to download and install everything manually. If you're familiar with Docker basics (especially networking), this part will not be too challenging.
 
-In step **4 Configure RDS**, we already configured the Database Server with Amazon RDS, so from a technical, maintenance, and security perspective, we won't need to worry much about access or data safety anymore. Therefore, in this cloud deployment, we will focus on deploying the remaining applications with Docker Images.
+In the earlier 4 Configure RDS step, we already configured the Database Server using Amazon RDS, so we no longer need to worry much about maintenance, access security, or data safety. Now, in this cloud deployment, we'll focus on deploying the remaining applications using Docker Images.
 
-In the following sections, we will deploy with Docker Compose, allowing you to see the difference when deploying locally with Docker Images on the Cloud and with Docker Compose on the Cloud.
+Next, we'll deploy using Docker Compose so you can see the difference between deploying on Local, deploying with Docker Images on the Cloud, and deploying with Docker Compose on the Cloud.
 
-#### Deploying the Web Server
+{{% notice note %}} 
+In the 2 Deploy on Local section, you can consider this as deploying in a development environment, but now we'll deploy in a production or testing environment. 
+{{% /notice %}}
 
-First, we will need the Endpoint of the RDS we created earlier.
+#### Deploy the Web Server
 
-- Go to the RDS Console.
-- Select the RDS Instance you just created.
-- Copy the Endpoint.
+Go to the source code directory we cloned earlier, `aws-fcj-container-app`. Inside the `backend` folder, modify the contents of the `.env` file, specifically changing the `DB_HOST` variable.
 
-![6.1.1](/images/6-docker-image/6.1.1.png)
+![6.1.1.png](/images/6-docker-image/6.1.1.png)
 
-Source directory:
+![6.1.2.png](/images/6-docker-image/6.1.2.png)
 
-![6.1.2](/images/6-docker-image/6.1.2.png)
-
-Navigate to the source directory that we cloned earlier, `aws-fcj-container-app`. In the `backend` folder, we will modify the `.env` file, specifically the `DB_HOST` variable.
-
-![6.1.3](/images/6-docker-image/6.1.3.png)
-
-![6.1.4](/images/6-docker-image/6.1.4.png)
-
-Now our web server is ready to run. Next, execute the command below:
+Now the web server is ready to run. Next, run the command below:
 
 ```bash
 docker build . -t backend-image
 ```
 
-![6.1.5](/images/6-docker-image/6.1.5.png)
+![6.1.3.png](/images/6-docker-image/6.1.3.png)
 
-Before starting the Container for the web server, we need to create a **network** for the containers to communicate with each other.
+Before starting the web server container, we need to create a **network** for the containers to communicate with each other:
+
 
 ```bash
 docker network create my-network
 ```
 
-Next, run the Docker Container with the newly created Docker Image:
+Then, run the Docker container using the newly built Docker Image:
 
 ```bash
 docker run -p 5000:5000 --network my-network --name backend backend-image
 ```
 
-![6.1.7](/images/6-docker-image/6.1.7.png)
+![6.1.4.png](/images/6-docker-image/6.1.4.png)
 
-#### Deploying the Application
+#### Deploy the Application
 
-Now, open a new SSH Session and follow similar steps as above, but this time, we will deploy the Application.
+Now, open a new SSH session to follow the same steps, but this time, we'll deploy the Application.
 
-![6.1.8](/images/6-docker-image/6.1.8.png)
+![6.1.5.png](/images/6-docker-image/6.1.5.png)
 
-- `cd` into the `frontend` directory
+- `cd` into the `frontend` folder.
 - Run the command below:
 
 ```bash
 docker build . -t frontend-image
 ```
 
-![6.1.9](/images/6-docker-image/6.1.9.png)
+![6.1.6.png](/images/6-docker-image/6.1.6.png)
 
-Next, run the Docker Container with the newly created Docker Image:
-
-```bash
-docker run --network my-network --name frontend frontend-image
-```
-
-![6.1.10](/images/6-docker-image/6.1.10.png)
-
-#### Deploying the Nginx Server
-
-Open another session. Before starting the Nginx Server, check if the previous containers are still running:
+Then, run the Docker container using the newly created Docker Image:
 
 ```bash
-docker ps
+docker run -p 3000:80 --network my-network --name frontend frontend-image
 ```
 
-![6.1.11](/images/6-docker-image/6.1.11.png)
-
-Ok, everything is running as expected.
-
-To ensure the system runs smoothly, we will add one more step: deploying the Nginx Server, which will act as a Proxy Server. Start the Nginx Server by:
-
-- `cd` into the `nginx` directory
-- Run the command below:
-
-```bash
-docker build . -t nginx-image
-```
-
-![6.1.12](/images/6-docker-image/6.1.12.png)
-
-Next, run the Docker Container with the newly created Docker Image:
-
-```bash
-docker run -p 3000:80 --network my-network --name nginx nginx-image
-```
-
-![6.1.13](/images/6-docker-image/6.1.13.png)
-
-Now, the application is ready for testing.
+![6.1.7.png](/images/6-docker-image/6.1.7.png)
