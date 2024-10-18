@@ -104,3 +104,24 @@ Tại bảng bên trái:
 - Chọn **Delete VPC**.
 
 ![9.14](/images/9-clean-up/9.14.png)
+
+#### Dọn Dẹp RDS
+
+Ở giao diện AWS console
+
+- Tìm kiếm và chọn **RDS**
+
+![9.15](/images/9-clean-up/9.15.png)
+
+- Chọn **Database**
+- Chọn vào RDS instance mà chúng ta đã tạo
+- Chọn **Action**
+- Chọn **Delete**
+
+![9.16](/images/9-clean-up/9.16.png)
+
+- Chọn **I acknowledge that upon instance deletion, automated backups, including system snapshots and point-in-time recovery, will no longer be available.**
+- Nhập `delete me`
+- Chọn **Delete**
+
+![9.17](/images/9-clean-up/9.17.png)

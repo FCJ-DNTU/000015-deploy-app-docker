@@ -104,3 +104,24 @@ In the left panel:
 - Select **Delete VPC**.
 
 ![9.14](/images/9-clean-up/9.14.png)
+
+#### Clean Up RDS
+
+On the AWS Console interface:
+
+- Search for and select **RDS**.
+
+![9.15](/images/9-clean-up/9.15.png)
+
+- Select **Databases**.
+- Choose the RDS instance we created.
+- Click **Action**.
+- Select **Delete**.
+
+![9.16](/images/9-clean-up/9.16.png)
+
+- Check **I acknowledge that upon instance deletion, automated backups, including system snapshots and point-in-time recovery, will no longer be available.**
+- Enter `delete me`.
+- Click **Delete**.
+
+![9.17](/images/9-clean-up/9.17.png)
