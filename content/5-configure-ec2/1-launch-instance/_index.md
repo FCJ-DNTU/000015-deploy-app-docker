@@ -63,9 +63,9 @@ In the EC2 instance management interface:
 - Select **Security**
 - Click on **Modify IAM role**
 
-![5.1.12](/images/5-configure-ec2/5.1.12.png)
+![5.1.9](/images/5-configure-ec2/5.1.9.png)
 
 - Select the Role **CustomeRWECRRole**
 - Click on **Update IAM role**
 
-![5.1.13](/images/5-configure-ec2/5.1.13.png)
+![5.1.10](/images/5-configure-ec2/5.1.10.png)

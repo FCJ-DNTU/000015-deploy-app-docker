@@ -63,9 +63,9 @@ Kéo xuống dưới phần cấu hình security
 - Chọn **Security**
 - Chọn **Modify IAM role**
 
-![5.1.12](/images/5-configure-ec2/5.1.12.png)
+![5.1.9](/images/5-configure-ec2/5.1.9.png)
 
 - Chọn Role **CustomeRWECRRole**
 - Chọn **Update IAM role**
 
-![5.1.13](/images/5-configure-ec2/5.1.13.png)
+![5.1.13](/images/5-configure-ec2/5.1.10.png)
