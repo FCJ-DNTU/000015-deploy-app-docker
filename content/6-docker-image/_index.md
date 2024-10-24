@@ -12,5 +12,5 @@ In previous section, we added more libraries, packages successfully. Now we use 
 
 ![docker_images](/images/6-docker-image/docker_images.png)
 
-1. [Deployu Application](1-deploy)
+1. [Deploy Application](1-deploy)
 2. [Test Application](2-test-app)
