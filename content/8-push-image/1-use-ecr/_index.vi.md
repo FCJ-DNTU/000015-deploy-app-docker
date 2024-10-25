@@ -59,6 +59,10 @@ Theo mặc định (15/10/2024) thì AWS CLI không được cài đặt mặc �
 
 Trước tiên thì chúng ta cần phải tải **unzip** trước.
 
+```bash
+sudo apt install unzip
+```
+
 ![8.1.10.png](/images/8-push-image/8.1.10.png)
 
 Sau đó thì chúng ta sẽ dùng các câu lệnh ở bên dưới để có thể cài đặt được AWS CLI.
@@ -88,6 +92,10 @@ Khi đó một hộp thoại sẽ nhảy lên và chúng ta có thể thấy đ�
 
 Trở lại với EC2 Instance, chúng ta cần phải dùng Root User để có thể đăng nhập vào trong ECR với Docker.
 
+Ở AWS console của Push commands for fcjresbar-fe
+
+- Chọn câu lệnh thứ nhất để xác thực đăng nhập vào Amazon Elastic Container Registry (ECR) từ môi trường Docker local của bạn. Trước đó hay đảm bảo rằng bạn đã cấu hình **AWS Configure**
+
 ![8.1.15.png](/images/8-push-image/8.1.15.png)
 
 {{% notice note %}}
@@ -96,13 +104,25 @@ Bởi vì khi mà người dùng sử dụng sudo để đăng nhập vào ECR v
 
 Ở các phần trước đó thì chúng ta đã tạo ra các Images cho từng ứng dụng rồi, nên là giờ chỉ cần gắn tag lại cho phù hợp rồi đẩy lên trên các Registry tương ứng.
 
-![8.1.16.png](/images/8-push-image/8.1.16.png)
+```bash
+docker image ls
+```
+
+Ở AWS console của Push commands for fcjresbar-fe
+
+- Chọn dòng lệnh thứ 3 để thực hiện gắn tag, thay thế các tên resource image mà bạn tạo trước đó
 
 {{% notice note %}}
 Format chung `<Account_ID>.dkr.ecr.<region>.amazonaws.com/<Repository_Name>:<Name_tag>`
 {{% /notice %}}
 
+![8.1.16.png](/images/8-push-image/8.1.16.png)
+
 Sau khi tạo xong thì tiến hành đẩy Image lên ECR
+
+Ở AWS console của Push commands for fcjresbar-fe
+
+- Chọn lệnh push
 
 ![8.1.17.png](/images/8-push-image/8.1.17.png)
 

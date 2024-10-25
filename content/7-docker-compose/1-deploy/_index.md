@@ -23,6 +23,7 @@ Create a new SSH session, then navigate to the `docker-compose-env` directory at
 Next, we can simply run:
 
 ```bash
+cd ..
 sudo docker compose -f docker-compose.app.yml up
 ```
 
@@ -33,4 +34,3 @@ This will start the two containers just like we did in the previous section.
 ![7.1.6.png](/images/7-docker-compose/7.1.6.png)
 
 Okay, it looks like our application is up and running. In the next step, we will proceed to check the application.
-

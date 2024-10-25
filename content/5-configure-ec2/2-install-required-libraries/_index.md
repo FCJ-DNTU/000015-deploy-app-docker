@@ -6,7 +6,6 @@ chapter = false
 pre = "<b>5.2. </b>"
 +++
 
-
 First, we need to connect to the EC2 instance that we just created using SSH. Then, run the following commands to update the system and its packages.
 
 ```bash
@@ -41,6 +40,10 @@ sudo apt-get update
 ![5.2.3.png](/images/5-configure-ec2/5.2.3.png)
 
 Then proceed to install the necessary Docker libraries.
+
+```bash
+ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 
 ![5.2.4.png](/images/5-configure-ec2/5.2.4.png)
 
