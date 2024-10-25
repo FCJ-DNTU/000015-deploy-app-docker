@@ -33,7 +33,7 @@ Vào trong thư mục mã nguồn mà chúng ta đã clone từ trước đó `a
 Giờ thì web server của chúng ta cũng đã sẵn sàng để chạy, tiếp theo là chạy lệnh ở bên dưới
 
 ```bash
-docker build . -t backend-image
+sudo docker build . -t backend-image
 ```
 
 ![6.1.3.png](/images/6-docker-image/6.1.3.png)
@@ -41,13 +41,13 @@ docker build . -t backend-image
 Trước khi bắt đầu chạy Container cho web server, thì mình sẽ cần phải tạo một **network** cho các container trong môi trường giao tiếp với nhau
 
 ```bash
-docker network create my-network
+sudo docker network create my-network
 ```
 
 Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới tạo
 
 ```bash
-docker run -p 5000:5000 --network my-network --name backend backend-image
+sudo docker run -p 5000:5000 --network my-network --name backend backend-image
 ```
 
 ![6.1.4.png](/images/6-docker-image/6.1.4.png)
@@ -62,7 +62,7 @@ Giờ chúng ta sẽ phải mở một SSH Session mới để thực hiện tư
 - Chạy lệnh như bên dưới
 
 ```bash
-docker build . -t frontend-image
+sudo docker build . -t frontend-image
 ```
 
 ![6.1.6.png](/images/6-docker-image/6.1.6.png)
@@ -70,7 +70,7 @@ docker build . -t frontend-image
 Sau đó là tiến hành chạy Docker Container với Docker Image vừa mới tạo
 
 ```bash
-docker run -p 3000:80 --network my-network --name frontend frontend-image
+sudo docker run -p 3000:80 --network my-network --name frontend frontend-image
 ```
 
 ![6.1.7.png](/images/6-docker-image/6.1.7.png)

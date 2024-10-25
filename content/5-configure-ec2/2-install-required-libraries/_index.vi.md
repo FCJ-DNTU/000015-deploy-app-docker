@@ -41,6 +41,10 @@ sudo apt-get update
 
 Sau đó là tiến hành cài đặt các thư viện liên quan cho docker
 
+```bash
+ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
 ![5.2.4.png](/images/5-configure-ec2/5.2.4.png)
 
 #### Cài đặt MySQL Client

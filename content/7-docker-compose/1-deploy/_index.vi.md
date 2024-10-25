@@ -23,6 +23,7 @@ Tạo một SSH Session mới, sau đó vào trong thư mục `docker-compose-en
 Sau đó thì chúng ta chỉ đơn giản dùng
 
 ```bash
+cd ..
 sudo docker compose -f docker-compose.app.yml up
 ```
 
