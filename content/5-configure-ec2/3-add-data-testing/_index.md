@@ -38,17 +38,34 @@ mysql -h "rds-endpoint" -u admin -p
 
 ![5.3.3.png](/images/5-configure-ec2/5.3.3.png)
 
-Next, we will use the `source /home/ubuntu/aws-fcj-container-app/database/init.sql` command to run the SQL script. Paste the script path copied earlier and execute the command.
+Next, we will use the command to run the SQL script. Paste the script path copied earlier and execute the command.
+
+```bash
+source /home/ubuntu/aws-fcj-container-app/database/init.sql
+```
 
 ![5.3.4.png](/images/5-configure-ec2/5.3.4.png)
 
 #### Verify Results
 
-Check the database: `SHOW DATABASES`
+Check the database:
+
+```bash
+SHOW DATABASES;
+```
 
 ![5.3.5.png](/images/5-configure-ec2/5.3.5.png)
 
-Check the data: `USE fcjresbar`
-then `SELECT * FROM fcjresbar`
+Check the data:
+
+```bash
+USE fcjresbar;
+```
+
+then
+
+```bash
+SELECT * FROM Clients;
+```
 
 ![5.3.6.png](/images/5-configure-ec2/5.3.6.png)
