@@ -18,8 +18,8 @@ In the earlier 4 Configure RDS step, we already configured the Database Server u
 
 Next, we'll deploy using Docker Compose so you can see the difference between deploying on Local, deploying with Docker Images on the Cloud, and deploying with Docker Compose on the Cloud.
 
-{{% notice note %}} 
-In the 2 Deploy on Local section, you can consider this as deploying in a development environment, but now we'll deploy in a production or testing environment. 
+{{% notice note %}}
+In the 2 Deploy on Local section, you can consider this as deploying in a development environment, but now we'll deploy in a production or testing environment.
 {{% /notice %}}
 
 #### Deploy the Web Server
@@ -33,22 +33,21 @@ Go to the source code directory we cloned earlier, `aws-fcj-container-app`. Insi
 Now the web server is ready to run. Next, run the command below:
 
 ```bash
-docker build . -t backend-image
+sudo docker build . -t backend-image
 ```
 
 ![6.1.3.png](/images/6-docker-image/6.1.3.png)
 
 Before starting the web server container, we need to create a **network** for the containers to communicate with each other:
 
-
 ```bash
-docker network create my-network
+sudo docker network create my-network
 ```
 
 Then, run the Docker container using the newly built Docker Image:
 
 ```bash
-docker run -p 5000:5000 --network my-network --name backend backend-image
+sudo docker run -p 5000:5000 --network my-network --name backend backend-image
 ```
 
 ![6.1.4.png](/images/6-docker-image/6.1.4.png)
@@ -63,7 +62,7 @@ Now, open a new SSH session to follow the same steps, but this time, we'll deplo
 - Run the command below:
 
 ```bash
-docker build . -t frontend-image
+sudo docker build . -t frontend-image
 ```
 
 ![6.1.6.png](/images/6-docker-image/6.1.6.png)
@@ -71,7 +70,7 @@ docker build . -t frontend-image
 Then, run the Docker container using the newly created Docker Image:
 
 ```bash
-docker run -p 3000:80 --network my-network --name frontend frontend-image
+sudo docker run -p 3000:80 --network my-network --name frontend frontend-image
 ```
 
 ![6.1.7.png](/images/6-docker-image/6.1.7.png)

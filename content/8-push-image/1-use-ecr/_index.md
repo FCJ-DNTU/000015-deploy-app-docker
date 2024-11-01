@@ -1,5 +1,5 @@
 +++
-title = "Use ECR"
+title = "Using ECR"
 date = 2024
 weight = 1
 chapter = false
@@ -13,15 +13,17 @@ pre = "<b>8.1. </b>"
 
 ![8.1.1.png](/images/8-push-image/8.1.1.png)
 
-We will create two different repositories to hold the Docker Images. First, we will create a repository to store the image for the frontend app.
+We will create 2 different repositories to store Docker Images. First is to create a repository to store images for the frontend app.
 
 - Repository name: `fcjresbar-fe`.
+
 - Image tag mutability: select **Mutable**.
+
 - Encryption configuration: leave it as default.
 
 ![8.1.2.png](/images/8-push-image/8.1.2.png)
 
-- Click **Create** to create the repository.
+- Click **Create** to create
 
 ![8.1.3.png](/images/8-push-image/8.1.3.png)
 
@@ -29,40 +31,46 @@ We will create two different repositories to hold the Docker Images. First, we w
 
 #### Create ECR Repository for Backend Image
 
-Similarly, we will now create a repository for the Backend Image.
+Similarly, now we will create for Backend Image
 
 ![8.1.5.png](/images/8-push-image/8.1.5.png)
 
 With the following information:
 
 - Repository name: `fcjresbar-be`.
+
 - Image tag mutability: select **Mutable**.
+
 - Encryption configuration: leave it as default.
 
 ![8.1.6.png](/images/8-push-image/8.1.6.png)
 
-- Click **Create** to create the repository.
+- Click **Create** to create
 
 ![8.1.7.png](/images/8-push-image/8.1.7.png)
 
 ![8.1.8.png](/images/8-push-image/8.1.8.png)
 
 {{% notice note %}}
- We need to create a separate repository for each application to manage the versions of Docker images more easily, especially for performing CI/CD later on.
+We need to create each repository for each different application to manage the version of Docker images more easily, especially for future CI/CD implementation.
 
 {{% /notice %}}
 
 #### Install AWS CLI
 
-By default (as of October 15, 2024), AWS CLI is not pre-installed in Ubuntu.
+By default (10/15/2024), AWS CLI is not installed by default in Ubuntu.
 
 ![8.1.9.png](/images/8-push-image/8.1.9.png)
 
-First, we need to install **unzip**.
+First we need to download **unzip** first.
+
+```bash
+sudo apt install unzip
+```
 
 ![8.1.10.png](/images/8-push-image/8.1.10.png)
 
-Then, we will use the commands below to install the AWS CLI.
+Then we will use the commands below to install AWS CLI.
 
 ```bash
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -76,59 +84,74 @@ sudo ./aws/install
 
 #### Push Frontend Image to ECR
 
-Vào lại ECR Console
+Re-enter ECR Console
 
 - Select `fcjresbar-fe`
-- Click **View push commands**
+- Press **View push commands**
 
 ![8.1.13.png](/images/8-push-image/8.1.13.png)
 
-A dialog box will pop up, and we can see a series of commands.
+A dialog box will pop up and we can see a series of commands.
 
 ![8.1.14.png](/images/8-push-image/8.1.14.png)
 
-Return to the EC2 Instance; we need to use the Root User to log in to ECR with Docker.
+Back to EC2 Instance, we need to use Root User to be able to log in to ECR with Docker.
+
+In AWS console of Push commands for fcjresbar-fe
+
+- Select the first command to authenticate to log in to Amazon Elastic Container Registry (ECR) from your local Docker environment. Before that, make sure you have configured **AWS Configure**
 
 ![8.1.15.png](/images/8-push-image/8.1.15.png)
 
 {{% notice note %}}
-When using sudo to log in to ECR with Docker, the credentials are stored in that user's HOME directory. However, when performing push or pull commands, it will look for credentials in the Root directory instead of the stored HOME directory.
+Because when a user uses sudo to log in to ECR with Docker, the credential is saved in the HOME Dir of that user. But when you execute the push or pull command, it will see the credential in Root instead of in HOME Dir which was saved when logging in before.
+
 {{% /notice %}}
 
-In the previous sections, we created the Images for each application, so now we just need to tag them appropriately and push them to the corresponding Registries.
+In the previous sections, we have created Images for each application, so now we just need to re-tag them appropriately and push them to the corresponding Registry.
 
-![8.1.16.png](/images/8-push-image/8.1.16.png)
+```bash
+docker image ls
+```
+
+In the AWS console of Push commands for fcjresbar-fe
+
+- Select the 3rd command line to perform tagging, replace the image resource names you created earlier
 
 {{% notice note %}}
 General format `<Account_ID>.dkr.ecr.<region>.amazonaws.com/<Repository_Name>:<Name_tag>`
 {{% /notice %}}
 
-After creating the tag, proceed to push the Image to ECR.
+![8.1.16.png](/images/8-push-image/8.1.16.png)
+
+After creating, push the Image to ECR
+
+In the AWS console of Push commands for fcjresbar-fe
+
+- Select the push command
 
 ![8.1.17.png](/images/8-push-image/8.1.17.png)
 
 #### Push Backend Image to ECR
 
-Similarly, we will view the push command for `fcjresbar-be`, remembering to copy the login command. But log out first.
+Similarly, we will also view the push command of `fcjresbar-be`, remember to copy the login command. But logout first
 
 ![8.1.18.png](/images/8-push-image/8.1.18.png)
 
-Log in again using the copied login command.
+Log back in with the copied login command
 
 ![8.1.19.png](/images/8-push-image/8.1.19.png)
 
-Again, tag the image appropriately.
+Similarly, tag the image appropriately
 
 ![8.1.20.png](/images/8-push-image/8.1.20.png)
 
-Push the image to ECR.
+Push the image to ECR
 
 ![8.1.21.png](/images/8-push-image/8.1.21.png)
 
-#### Check the Results
+#### Check the result
 
-If successful, go into the ECR Console and navigate to each repository to see the results.
+If successful, go to ECR Console, go to each repositories in turn, we can see the result here.
 
-![8.1.22.png](/images/8-push-image/8.1.22.png)
-
-![8.1.23.png](/images/8-push-image/8.1.23.png)
+![8.1.22.png](/images/8-push-image/8.1.22.png) ![8.1.23.png](/images/8-push-image/8.1.23.png)
