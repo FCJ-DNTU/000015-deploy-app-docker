@@ -7,7 +7,7 @@ chapter = false
 
 # Deploy Application on Docker
 
-
+In this workshop, we will deploy a application on Docker, including **Frontend**, **Backend** and **Database**, but before we do that, we have to deploy application on our PC first.
 
 #### Main Content
 

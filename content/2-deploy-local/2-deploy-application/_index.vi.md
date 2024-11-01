@@ -21,11 +21,11 @@ pre = "<b>2.2. </b>"
 
 Clone mã nguồn của ứng dụng từ trên Github về trên máy.
 
-**INSERT IMAGE HERE**
-
 ```bash
-git clone https://github.com/FCJ-DNTU/fcj-resbar.git
+git clone https://github.com/AWS-First-Cloud-Journey/aws-fcj-container-app.git
 ```
+
+**INSERT IMAGE HERE**
 
 Và đây là kết quả
 
@@ -62,15 +62,15 @@ Sau khi dữ liệu đã được thêm thành công, thì giờ chúng ta sẽ 
 - Vào trong thư mục `backend` sửa đổi lại nội dung trong file `.env`.
 
 ```bash
-# Change these information
+# Thay đổi các thông tin sau
 ## Thay đổi các thông tin sau phù hợp với cấu hình
-## trong lúc bạn cài đặt
+## của các ứng dụng
 MYSQL_USER=admin
 MYSQL_PASSWORD=letmein12345
 MYSQL_DATABASE=fcjresbar
 
-# Change this host
-## Host này thì vẫn để nguyên trạng
+
+# Host này thì vẫn để nguyên trạng
 DB_HOST=localhost
 
 DB_DIALECT=mysql

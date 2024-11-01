@@ -7,7 +7,7 @@ chapter = false
 
 # Deploy Application on Docker
 
-
+Trong bài này, thì chúng ta sẽ tìm hiểu về cách triển khai ứng dụng trên Docker, bao gồm **Frontend**, **Backend** và **Database**, nhưng trước khi làm việc đó thì chúng ta sẽ phải triển khai ứng dụng trong máy vi tính cá nhân trước.
 
 #### Nội dung chính
 

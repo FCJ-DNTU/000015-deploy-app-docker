@@ -21,9 +21,11 @@ First,
 
 Clone the application's source code from GitHub to your machine.
 
-**INSERT IMAGE HERE**
+```bash
+git clone https://github.com/AWS-First-Cloud-Journey/aws-fcj-container-app.git
+```
 
-REPLACE HERE
+**INSERT IMAGE HERE**
 
 And here is the result:
 
@@ -47,7 +49,9 @@ Use MySQL Shell to connect to MySQL Server. The connection steps are similar to 
 
 Run some queries to verify:
 
-REPLACE HERE
+```sql
+SELECT * FROM Clients;
+```
 
 ![2.2.6](/images/2-deploy-local/2.2.6.png)
 
@@ -57,18 +61,38 @@ After the data is successfully added, we will start the Web Server. First,
 
 - Go into the `backend` folder and modify the contents of the `.env` file.
 
-REPLACE HERE
+```bash
+# Change information
+## Thay đổi các thông tin sau phù hợp với cấu hình
+## Modify these variables to fit with the configuration
+## for applications
+MYSQL_USER=admin
+MYSQL_PASSWORD=letmein12345
+MYSQL_DATABASE=fcjresbar
+
+# Don't modify this host
+DB_HOST=localhost
+
+DB_DIALECT=mysql
+NODE_ENV=development
+PORT=5000
+JWT_SECRET=0bac010eca699c25c8f62ba86e319c2305beb94641b859c32518cb854addb5f4
+```
 
 - Then open the **Terminal** in this folder.
 - Proceed to install the NPM packages to run the server.
 
-REPLACE HERE
+```bash
+npm install
+```
 
 ![2.2.7](/images/2-deploy-local/2.2.7.png)
 
 Next, start the server:
 
-REPLACE HERE
+```bash
+npm run dev
+```
 
 ![2.2.8](/images/2-deploy-local/2.2.8.png)
 
@@ -81,13 +105,35 @@ Next, I'll deploy the client application:
 - Go to the `frontend` folder.
 - Open the **Terminal** and install the NPM packages.
 
-REPLACE HERE
+```bash
+npm install
+```
 
 ![2.2.9](/images/2-deploy-local/2.2.9.png)
 
 Before running the application, I need to update the content in the `vite.config.js` file, as shown in the sample configuration below:
 
-REPLACE HERE
+```js
+/// <reference types="vite/client" />
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      "/api": {
+        // API Endpoint of Web Server
+        target: "http://localhost:5000/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+});
+```
 
 {{% notice note%}}
 The above configuration sets up a proxy for Vite, meaning that when a request URL contains `/api`, it will be replaced by the **target** string.

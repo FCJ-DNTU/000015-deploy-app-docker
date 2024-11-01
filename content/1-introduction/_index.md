@@ -8,7 +8,7 @@ pre = "<b>1. </b>"
 
 ### Overview
 
-![1.1](/images/1-introduction/1.2.png)
+![deploy_on_aws_with_docker](/images/1-introduction/deploy_on_aws_with_docker.png)
 
 In this workshop, we will practice deploying applications to Docker Containers, from building to managing the entire operation process. You will explore how to leverage the power of popular tools and services in a containerized environment such as Docker Hub, Nginx, Amazon ECR, Amazon RDS, and Amazon EC2.
 

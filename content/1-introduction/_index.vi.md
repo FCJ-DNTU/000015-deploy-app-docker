@@ -8,7 +8,7 @@ pre = "<b>1. </b>"
 
 ### Overview
 
-![1.1](/images/1-introduction/1.2.png)
+![deploy_on_aws_with_docker](/images/1-introduction/deploy_on_aws_with_docker.png)
 
 Trong workshop này, chúng ta sẽ cùng nhau thực hành việc triển khai ứng dụng lên Docker Container, từ xây dựng đến quản lý toàn bộ quá trình vận hành. Bạn sẽ được khám phá cách tận dụng sức mạnh của các công cụ và dịch vụ phổ biến trong môi trường container hóa như Docker Hub, Nginx, Amazon ECR, Amazon RDS, và Amazon EC2.
 
